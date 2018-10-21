@@ -29,10 +29,12 @@ namespace OutOfCite.Models
         [Required]
         public string LinkedIn { get; set; }
 
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<SubmittedArticle> SubmittedArticles { get; set; }
 
-        public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<FavoriteArticle> FavoriteArticles { get; set; }
 
-        public virtual ICollection<PaymentType> PaymentTypes { get; set; }
+        public virtual ICollection<UserAffiliation> UserAffiliations { get; set; }
+
+        public virtual ICollection<UserArticleVote> UserArticleVotes { get; set; }
     }
 }
