@@ -29,10 +29,10 @@ namespace OutOfCite.Models
         public string Journal { get; set; }
 
         [Required]
-        public float JournalImpact { get; set; }
+        public double JournalImpact { get; set; }
 
         [Required]
-        public float Citations { get; set; }
+        public double Citations { get; set; }
 
         public Author Author { get; set; }
 
