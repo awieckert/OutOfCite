@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 
 namespace OutOfCite.Areas.Identity.Pages.Account {
     [AllowAnonymous]
@@ -76,6 +77,10 @@ namespace OutOfCite.Areas.Identity.Pages.Account {
                     Email = Input.Email,
                     LinkedIn = Input.LinkedIn
                 };
+                // Need to check the number of returned applications users. If it is 0 then we are good to go
+                // otherwise need to return to the page and display an erro. May want to use a custom validation
+                //var checkUserName =  await _userManager.Users.Where(x => x.UserName.ToLower() == user.UserName.ToLower());
+
                 var result = await _userManager.CreateAsync (user, Input.Password);
                 if (result.Succeeded) {
                     _logger.LogInformation ("User created a new account with password.");
