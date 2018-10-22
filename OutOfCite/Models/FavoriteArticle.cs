@@ -13,7 +13,7 @@ namespace OutOfCite.Models
 
         public int ArticleId { get; set; }
 
-        public int ApplicationUserId { get; set; }
+        public string ApplicationUserId { get; set; }
 
         public Article Article { get; set; }
 

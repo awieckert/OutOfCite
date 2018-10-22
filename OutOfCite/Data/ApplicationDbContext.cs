@@ -24,21 +24,16 @@ namespace OutOfCite.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<ApplicationUser>()
-            .HasMany(a => a.UserArticleVotes)
-            .WithOne(u => u.ApplicationUser)
-            .OnDelete(DeleteBehavior.Restrict);
-
             ApplicationUser user = new ApplicationUser
             {
                 Id = Guid.NewGuid().ToString(),
                 FirstName = "Admin",
                 LastName = "Istrator",
-                UserName = "Admin2",
-                NormalizedUserName = "ADMIN2",
+                UserName = "Admin",
+                NormalizedUserName = "ADMIN",
                 Email = "admin@admin.com",
                 NormalizedEmail = "ADMIN@ADMIN.COM",
-                LinkedIn = "www.linkedin.com/in/admin2",
+                LinkedIn = "www.linkedin.com/in/admin",
                 EmailConfirmed = true,
                 LockoutEnabled = false,
                 SecurityStamp = Guid.NewGuid().ToString("D")
@@ -280,6 +275,60 @@ namespace OutOfCite.Data
                     FirstName = "James",
                     LastName = "Chen",
                     HIndex = 34
+                }
+                );
+
+            modelBuilder.Entity<UserAffiliation>().HasData(
+                new UserAffiliation ()
+                {
+                    Id = 1,
+                    ApplicationUserId = user.Id,
+                    AffiliationId = 1
+                },
+                new UserAffiliation ()
+                {
+                    Id = 2,
+                    ApplicationUserId = user.Id,
+                    AffiliationId = 2
+                },
+                new UserAffiliation ()
+                {
+                    Id = 3,
+                    ApplicationUserId = user.Id,
+                    AffiliationId = 3
+                },
+                new UserAffiliation ()
+                {
+                    Id = 4,
+                    ApplicationUserId = user2.Id,
+                    AffiliationId = 1
+                }
+                );
+
+            modelBuilder.Entity<FavoriteArticle>().HasData(
+                new FavoriteArticle ()
+                {
+                    Id = 1,
+                    ArticleId = 1,
+                    ApplicationUserId = user2.Id
+                },
+                new FavoriteArticle()
+                {
+                    Id = 2,
+                    ArticleId = 7,
+                    ApplicationUserId = user.Id
+                },
+                new FavoriteArticle ()
+                {
+                    Id = 3,
+                    ArticleId = 2,
+                    ApplicationUserId = user.Id
+                },
+                new FavoriteArticle ()
+                {
+                    Id = 4,
+                    ArticleId = 10,
+                    ApplicationUserId = user.Id
                 }
                 );
         }

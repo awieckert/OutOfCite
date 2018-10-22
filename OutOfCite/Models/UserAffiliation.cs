@@ -12,7 +12,7 @@ namespace OutOfCite.Models
         public int Id { get; set; }
 
         [Required]
-        public int ApplicationUserId { get; set; }
+        public string ApplicationUserId { get; set; }
 
         [Required]
         public int AffiliationId { get; set; }
