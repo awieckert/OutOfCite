@@ -83,11 +83,6 @@ namespace OutOfCite.Data
                 {
                     Id = 3,
                     Name = "Developmental Biology"
-                },
-                new Affiliation()
-                {
-                    Id = 4,
-                    Name = "Cancer"
                 }
             );
 
