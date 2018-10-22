@@ -331,6 +331,44 @@ namespace OutOfCite.Data
                     ApplicationUserId = user.Id
                 }
                 );
+
+            modelBuilder.Entity<UserArticleVote>().HasData(
+                new UserArticleVote ()
+                {
+                    Id = 1,
+                    ApplicationUserId = user.Id,
+                    ArticleId = 7,
+                    Vote = true
+                },
+                new UserArticleVote ()
+                {
+                    Id = 2,
+                    ApplicationUserId = user.Id,
+                    ArticleId = 2,
+                    Vote = true
+                },
+                new UserArticleVote ()
+                {
+                    Id = 3,
+                    ApplicationUserId = user.Id,
+                    ArticleId = 10,
+                    Vote = true
+                },
+                new UserArticleVote ()
+                {
+                    Id = 4,
+                    ApplicationUserId = user2.Id,
+                    ArticleId = 1,
+                    Vote = true
+                },
+                new UserArticleVote ()
+                {
+                    Id = 5,
+                    ApplicationUserId = user.Id,
+                    ArticleId = 8,
+                    Vote = false
+                }
+                );
         }
     }
 }
