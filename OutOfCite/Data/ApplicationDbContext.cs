@@ -279,7 +279,7 @@ namespace OutOfCite.Data
                     Id = 10,
                     FirstName = "James",
                     LastName = "Chen",
-                    HIndex = 3
+                    HIndex = 34
                 }
                 );
         }
