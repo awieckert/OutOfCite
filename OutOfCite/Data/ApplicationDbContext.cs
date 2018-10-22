@@ -171,6 +171,42 @@ namespace OutOfCite.Data
                     Journal = "	Journal of Laboratory Automation",
                     JournalImpact = 2.6,
                     Citations = 4
+                },
+                new Article()
+                {
+                    Id = 8,
+                    AuthorId = 8,
+                    AffiliationId = 3,
+                    Title = "A comparison of Ci/Gli activity as regulated by sufu in drosophila and mammalian hedgehog response",
+                    Abstract = "Suppressor of fused (Su(fu)/Sufu), one of the most conserved components of the Hedgehog (Hh) signaling pathway, binds Ci/Gli transcription factors and impedes activation of target gene expression. In Drosophila, the Su(fu) mutation has a minimal phenotype, and we show here that Ci transcriptional activity in large part is regulated independently of Su(fu) by other pathway components. Mutant mice lacking Sufu in contrast show excessive pathway activity and die as embryos with patterning defects. Here we show that in cultured cells Hh stimulation can augment transcriptional activity of a Gli2 variant lacking Sufu interaction and, surprisingly, that regulation of Hh pathway targets is nearly normal in the neural tube of Sufu-/- mutant embryos that also lack Gli1 function. Some degree of Hh-induced transcriptional activation of Ci/Gli thus can occur independently of Sufu in both flies and mammals. We further note that Sufu loss can also reduce Hh induction of high-threshold neural tube fates, such as floor plate, suggesting a possible positive pathway role for Sufu.",
+                    URL = "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0135804",
+                    Journal = "PLoS One",
+                    JournalImpact = 2.7,
+                    Citations = 5
+                },
+                new Article ()
+                {
+                    Id = 9,
+                    AuthorId = 9,
+                    AffiliationId = 3,
+                    Title = "Genomic dissection of conserved transcriptional regulation in intestinal epithelial cells",
+                    Abstract = "The intestinal epithelium serves critical physiologic functions that are shared among all vertebrates. However, it is unknown how the transcriptional regulatory mechanisms underlying these functions have changed over the course of vertebrate evolution. We generated genome-wide mRNA and accessible chromatin data from adult intestinal epithelial cells (IECs) in zebrafish, stickleback, mouse, and human species to determine if conserved IEC functions are achieved through common transcriptional regulation. We found evidence for substantial common regulation and conservation of gene expression regionally along the length of the intestine from fish to mammals and identified a core set of genes comprising a vertebrate IEC signature. We also identified transcriptional start sites and other putative regulatory regions that are differentially accessible in IECs in all 4 species. Although these sites rarely showed sequence conservation from fish to mammals, surprisingly, they drove highly conserved IEC expression in a zebrafish reporter assay. Common putative transcription factor binding sites (TFBS) found at these sites in multiple species indicate that sequence conservation alone is insufficient to identify much of the functionally conserved IEC regulatory information. Among the rare, highly sequence-conserved, IEC-specific regulatory regions, we discovered an ancient enhancer upstream from her6/HES1 that is active in a distinct population of Notch-positive cells in the intestinal epithelium. Together, these results show how combining accessible chromatin and mRNA datasets with TFBS prediction and in vivo reporter assays can reveal tissue-specific regulatory information conserved across 420 million years of vertebrate evolution. We define an IEC transcriptional regulatory network that is shared between fish and mammals and establish an experimental platform for studying how evolutionarily distilled regulatory information commonly controls IEC development and physiology.",
+                    URL = "https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.2002054",
+                    Journal = "PLoS One Biology",
+                    JournalImpact = 3,
+                    Citations = 3
+                },
+                new Article ()
+                {
+                    Id = 10,
+                    AuthorId = 10,
+                    AffiliationId = 3,
+                    Title = "In vivo imaging of Hedgehog pathway activation with a nuclear fluorescent reporter",
+                    Abstract = "The Hedgehog (Hh) pathway is essential for embryonic development and tissue regeneration, and its dysregulation can lead to birth defects and tumorigenesis. Understanding how this signaling mechanism contributes to these processes would benefit from an ability to visualize Hedgehog pathway activity in live organisms, in real time, and with single-cell resolution. We report here the generation of transgenic zebrafish lines that express nuclear-localized mCherry fluorescent protein in a Gli transcription factor-dependent manner. As demonstrated by chemical and genetic perturbations, these lines faithfully report Hedgehog pathway state in individual cells and with high detection sensitivity. They will be valuable tools for studying dynamic Gli-dependent processes in vertebrates and for identifying new chemical and genetic regulators of the Hh pathway.",
+                    URL = "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0103661",
+                    Journal = "PLoS One",
+                    JournalImpact = 2.7,
+                    Citations = 2
                 }
                 );
 
@@ -208,7 +244,7 @@ namespace OutOfCite.Data
                     Id = 5,
                     FirstName = "Steven",
                     LastName = "Barnes",
-                    HIndex = 30
+                    HIndex = 31
                 },
                 new Author()
                 {
@@ -227,8 +263,22 @@ namespace OutOfCite.Data
                 new Author()
                 {
                     Id = 8,
-                    FirstName = "",
-                    LastName = "",
+                    FirstName = "Phillip",
+                    LastName = "Beachy",
+                    HIndex = 78
+                },
+                new Author ()
+                {
+                    Id = 9,
+                    FirstName = "David",
+                    LastName = "Kingsley",
+                    HIndex = 53
+                },
+                new Author ()
+                {
+                    Id = 10,
+                    FirstName = "James",
+                    LastName = "Chen",
                     HIndex = 3
                 }
                 );
