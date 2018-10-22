@@ -61,7 +61,24 @@ namespace OutOfCite.Areas.Identity.Pages.Account {
             [Required]
             [Display(Name = "LinkedIn URL")]
             public string LinkedIn { get; set; }
+
+            [Required]
+            [Display(Name = "Username")]
+            //[IsAvailable]
+            public string UserName { get; set; }
         }
+
+        //public class IsAvailable : ValidationAttribute
+        //{
+        //    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        //    {
+        //        InputModel inputModel = (InputModel)validationContext.ObjectInstance;
+                
+        //        var checkUserName = _userManager.Users.Where(x => x.UserName.ToLower() == inputModel.UserName.ToLower()).Count();
+
+        //        return base.IsValid(value, validationContext);
+        //    }
+        //}
 
         public void OnGet (string returnUrl = null) {
             ReturnUrl = returnUrl;
@@ -73,13 +90,19 @@ namespace OutOfCite.Areas.Identity.Pages.Account {
                 var user = new ApplicationUser {
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
-                    UserName = Input.Email,
+                    UserName = Input.UserName,
                     Email = Input.Email,
                     LinkedIn = Input.LinkedIn
                 };
                 // Need to check the number of returned applications users. If it is 0 then we are good to go
                 // otherwise need to return to the page and display an erro. May want to use a custom validation
-                //var checkUserName =  await _userManager.Users.Where(x => x.UserName.ToLower() == user.UserName.ToLower());
+
+                var checkUserName = _userManager.Users.Where(x => x.UserName.ToLower() == user.UserName.ToLower()).Count();
+
+                if (checkUserName != 0)
+                {
+                    return Page();
+                }
 
                 var result = await _userManager.CreateAsync (user, Input.Password);
                 if (result.Succeeded) {
