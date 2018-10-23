@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 
 namespace OutOfCite.Areas.Identity.Pages.Account {
     [AllowAnonymous]
@@ -62,12 +63,24 @@ namespace OutOfCite.Areas.Identity.Pages.Account {
             public string LinkedIn { get; set; }
         }
 
+        //public class IsAvailable : ValidationAttribute
+        //{
+        //    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        //    {
+        //        InputModel inputModel = (InputModel)validationContext.ObjectInstance;
+                
+        //        var checkUserName = _userManager.Users.Where(x => x.UserName.ToLower() == inputModel.UserName.ToLower()).Count();
+
+        //        return base.IsValid(value, validationContext);
+        //    }
+        //}
+
         public void OnGet (string returnUrl = null) {
             ReturnUrl = returnUrl;
         }
 
         public async Task<IActionResult> OnPostAsync (string returnUrl = null) {
-            returnUrl = returnUrl ?? Url.Content ("~/");
+            returnUrl = returnUrl ?? Url.Content ("~/Home/MainPage");
             if (ModelState.IsValid) {
                 var user = new ApplicationUser {
                     FirstName = Input.FirstName,
@@ -76,6 +89,16 @@ namespace OutOfCite.Areas.Identity.Pages.Account {
                     Email = Input.Email,
                     LinkedIn = Input.LinkedIn
                 };
+                // Need to check the number of returned applications users. If it is 0 then we are good to go
+                // otherwise need to return to the page and display an erro. May want to use a custom validation
+
+                var checkUserName = _userManager.Users.Where(x => x.Email.ToLower() == user.Email.ToLower()).Count();
+
+                if (checkUserName != 0)
+                {
+                    return Page();
+                }
+
                 var result = await _userManager.CreateAsync (user, Input.Password);
                 if (result.Succeeded) {
                     _logger.LogInformation ("User created a new account with password.");
