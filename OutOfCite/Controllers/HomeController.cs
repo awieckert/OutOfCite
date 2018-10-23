@@ -15,7 +15,7 @@ namespace OutOfCite.Controllers
             return View();
         }
 
-        public IActionResult About()
+        public IActionResult MainPage()
         {
             ViewData["Message"] = "Your application description page.";
 
