@@ -49,7 +49,7 @@ namespace OutOfCite.Controllers
         {
             MainPageView mainPage = new MainPageView(_context);
 
-            return View();
+            return View(mainPage);
         }
 
         public IActionResult Contact()

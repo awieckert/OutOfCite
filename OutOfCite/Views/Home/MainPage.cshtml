@@ -1,4 +1,4 @@
-﻿
+﻿@model  OutOfCite.Models.ViewModels.MainPageView
 
 <div class="row">
     <div class="col-sm-offset-3 col-sm-6 text-center">
@@ -10,5 +10,74 @@
         <button><a asp-area="Identity" asp-page="/Account/Register">Neuroscience</a></button>
         <button><a asp-area="Identity" asp-page="/Account/Login">Toxicology</a></button>
         <button><a asp-area="Identity" asp-page="/Account/Login">Development</a></button>
+    </div>
+
+    <div class="panel panel-default panel-success col-sm-10 col-sm-offset-1">
+        <div class="panel-heading">
+            Top 3 Most Up Voted Articles
+        </div>
+        <div class="panel-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Title
+                        </th>
+                        <th>
+                            Journal
+                        </th>
+                        <th>
+                            Journal Impact
+                        </th>
+                        <th>
+                            Citations
+                        </th>
+                        <th>
+                            Up Votes
+                        </th>
+                        <th>
+                            Down Votes
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.TopArticles)
+                    {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Journal)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.JournalImpact)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Citations)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UpVotes)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DownVotes)
+                        </td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel panel-default panel-danger col-sm-10 col-sm-offset-1">
+        <div class="panel-heading">
+            Top 3 Most Down Voted Articles
+        </div>
+        <div class="panel-body">
+            Panel content
+        </div>
     </div>
 </div>

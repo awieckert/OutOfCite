@@ -12,6 +12,16 @@ body {
     padding-right: 15px;
 }
 
+.panel-default {
+    margin-top: 20px;
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+}
+
+.inline {
+    display: inline-block;
+}
+
 /* Carousel */
 .carousel-caption p {
     font-size: 20px;
