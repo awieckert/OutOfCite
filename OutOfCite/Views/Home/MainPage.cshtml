@@ -1,7 +1,14 @@
-﻿@{
-    ViewData["Title"] = "About";
-}
-<h2>@ViewData["Title"]</h2>
-<h3>@ViewData["Message"]</h3>
+﻿
 
-<p>Use this area to provide additional information.</p>
+<div class="row">
+    <div class="col-sm-offset-3 col-sm-6 text-center">
+        <h2>Out Of Cite</h2>
+        <h4>Bringing Quality, Low Tier Publications Into View</h4>
+        <h5>Select An Area Of Study</h5>
+    </div>
+    <div class="col-sm-offset-3 col-sm-6 text-center">
+        <button><a asp-area="Identity" asp-page="/Account/Register">Neuroscience</a></button>
+        <button><a asp-area="Identity" asp-page="/Account/Login">Toxicology</a></button>
+        <button><a asp-area="Identity" asp-page="/Account/Login">Development</a></button>
+    </div>
+</div>
