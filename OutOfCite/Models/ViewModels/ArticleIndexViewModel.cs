@@ -18,7 +18,8 @@ namespace OutOfCite.Models.ViewModels
 
             foreach (var item in lowImpactArticles)
             {
-
+                //var theH
+                //if ()
             }
 
             Affiliation = context.Affiliations.Where(x => x.Id == id).SingleOrDefault();
