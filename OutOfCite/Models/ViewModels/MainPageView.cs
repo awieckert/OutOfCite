@@ -13,9 +13,11 @@ namespace OutOfCite.Models.ViewModels
 
         public List<Article> WorstArticles { get; set; } = new List<Article>();
 
+        public List<Affiliation> Affiliations { get; set; }
+
         public MainPageView(ApplicationDbContext context)
         {
-
+            Affiliations = new List<Affiliation>(context.Affiliations);
             // Select top 3 art.Title
             // From  (
             //      Select u.ArticleId, count(u.vote) as 'Votes'
