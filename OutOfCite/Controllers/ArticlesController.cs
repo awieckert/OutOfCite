@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OutOfCite.Data;
 using OutOfCite.Models;
+using OutOfCite.Models.ViewModels;
 
 namespace OutOfCite.Controllers
 {
@@ -22,8 +23,14 @@ namespace OutOfCite.Controllers
         // GET: Articles
         public async Task<IActionResult> Index(int id)
         {
-            var applicationDbContext = _context.Articles.Include(a => a.Affiliation).Include(a => a.Author);
-            return View(await applicationDbContext.ToListAsync());
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            ArticleIndexViewModel articleIndex = new ArticleIndexViewModel(_context, id); 
+
+            return View(articleIndex);
         }
 
         // GET: Articles/Details/5
