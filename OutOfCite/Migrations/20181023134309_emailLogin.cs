@@ -1,33 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace OutOfCite.Data.Migrations
+namespace OutOfCite.Migrations
 {
-    public partial class fuckshit : Migration
+    public partial class emailLogin : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "Discriminator",
-                table: "AspNetUsers",
-                nullable: false,
-                defaultValue: "");
-
-            migrationBuilder.AddColumn<string>(
-                name: "FirstName",
-                table: "AspNetUsers",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "LastName",
-                table: "AspNetUsers",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "LinkedIn",
-                table: "AspNetUsers",
-                nullable: true);
-
             migrationBuilder.CreateTable(
                 name: "Affiliations",
                 columns: table => new
@@ -39,6 +19,48 @@ namespace OutOfCite.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Affiliations", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetRoles",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    UserName = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    PasswordHash = table.Column<string>(nullable: true),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
+                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    FirstName = table.Column<string>(nullable: false),
+                    LastName = table.Column<string>(nullable: false),
+                    LinkedIn = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -54,6 +76,112 @@ namespace OutOfCite.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Authors", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetRoleClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    RoleId = table.Column<string>(nullable: false),
+                    ClaimType = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<string>(nullable: false),
+                    ClaimType = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserLogins",
+                columns: table => new
+                {
+                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
+                    ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
+                    ProviderDisplayName = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserRoles",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(nullable: false),
+                    RoleId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserTokens",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(nullable: false),
+                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
+                    Name = table.Column<string>(maxLength: 128, nullable: false),
+                    Value = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -206,11 +334,11 @@ namespace OutOfCite.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "FirstName", "LastName", "LinkedIn" },
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LinkedIn", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "b14b835c-8852-473f-b86b-7baa4c1cf0b5", 0, "a0139f2c-2a62-4cfb-9934-dee540cca5f2", "ApplicationUser", "admin@admin.com", true, false, null, "ADMIN@ADMIN.COM", "ADMIN", "AQAAAAEAACcQAAAAEEIhQV7ICHeYVYaZSL6V2YLBZEVBFjGHcF/pyNbPUad8GuqyZFsZ9FktKoPjcpwfkw==", null, false, "ba800776-a218-4e9c-817a-7236dff24776", false, "Admin", "Admin", "Istrator", "www.linkedin.com/in/admin" },
-                    { "60b1d36f-b309-45f8-ab9e-3457687d48f6", 0, "7f78db0a-10d2-4be4-9585-0f00ccdeca63", "ApplicationUser", "wiec1369@gmail.com", true, false, null, "WIEC1369@GMAIL.COM", "TERRIBROGEN", "AQAAAAEAACcQAAAAECpb0kUd5XsmjxttT1soYUldY/pGDhdYSpqeSvFBa7ZZLI2SAFdIG0fcvwsEuaKypA==", null, false, "7e590c5e-5c01-4f53-a8ea-4f8935fcfe63", false, "TerriBrogen", "Adam", "Wieckert", "www.linkedin.com/in/awieckert" }
+                    { "3bca8de8-b7d0-4f55-891f-38110cb9cac2", 0, "5d559d97-fd63-4eca-a915-5d49c87dd391", "admin@admin.com", true, "Admin", "Istrator", "www.linkedin.com/in/admin", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEAvGxsxXM5xSpvLBV6uztCYSy8Ks0ZOSp4XkOofr46/h9uqXSmwjfhhKOhLYL+hPjQ==", null, false, "36a182d3-c9a3-4dee-a725-a0f1143aa234", false, "admin@admin.com" },
+                    { "4ea1d508-7b62-4b07-a01d-89927d82762a", 0, "60ab3bf3-7441-4a65-9424-4dd6cf895538", "wiec1369@gmail.com", true, "Adam", "Wieckert", "www.linkedin.com/in/awieckert", false, null, "WIEC1369@GMAIL.COM", "WIEC1369@GMAIL.COM", "AQAAAAEAACcQAAAAEP4yUiM1npR9leLz4PaS3BQfqe13CimjWAncDKcQbCEIJwQlzQr8ZZYmcwQ1+xG0Jw==", null, false, "bc0b4350-9fe7-49a3-b88a-28dc1dcca411", false, "wiec1369@gmail.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -252,10 +380,10 @@ namespace OutOfCite.Data.Migrations
                 columns: new[] { "Id", "AffiliationId", "ApplicationUserId", "ArticleId" },
                 values: new object[,]
                 {
-                    { 1, 1, "b14b835c-8852-473f-b86b-7baa4c1cf0b5", null },
-                    { 2, 2, "b14b835c-8852-473f-b86b-7baa4c1cf0b5", null },
-                    { 3, 3, "b14b835c-8852-473f-b86b-7baa4c1cf0b5", null },
-                    { 4, 1, "60b1d36f-b309-45f8-ab9e-3457687d48f6", null }
+                    { 1, 1, "3bca8de8-b7d0-4f55-891f-38110cb9cac2", null },
+                    { 2, 2, "3bca8de8-b7d0-4f55-891f-38110cb9cac2", null },
+                    { 3, 3, "3bca8de8-b7d0-4f55-891f-38110cb9cac2", null },
+                    { 4, 1, "4ea1d508-7b62-4b07-a01d-89927d82762a", null }
                 });
 
             migrationBuilder.InsertData(
@@ -263,10 +391,10 @@ namespace OutOfCite.Data.Migrations
                 columns: new[] { "Id", "ApplicationUserId", "ArticleId" },
                 values: new object[,]
                 {
-                    { 3, "b14b835c-8852-473f-b86b-7baa4c1cf0b5", 2 },
-                    { 1, "60b1d36f-b309-45f8-ab9e-3457687d48f6", 1 },
-                    { 2, "b14b835c-8852-473f-b86b-7baa4c1cf0b5", 7 },
-                    { 4, "b14b835c-8852-473f-b86b-7baa4c1cf0b5", 10 }
+                    { 3, "3bca8de8-b7d0-4f55-891f-38110cb9cac2", 2 },
+                    { 1, "4ea1d508-7b62-4b07-a01d-89927d82762a", 1 },
+                    { 2, "3bca8de8-b7d0-4f55-891f-38110cb9cac2", 7 },
+                    { 4, "3bca8de8-b7d0-4f55-891f-38110cb9cac2", 10 }
                 });
 
             migrationBuilder.InsertData(
@@ -274,11 +402,11 @@ namespace OutOfCite.Data.Migrations
                 columns: new[] { "Id", "ApplicationUserId", "ArticleId", "Vote" },
                 values: new object[,]
                 {
-                    { 2, "b14b835c-8852-473f-b86b-7baa4c1cf0b5", 2, true },
-                    { 4, "60b1d36f-b309-45f8-ab9e-3457687d48f6", 1, true },
-                    { 1, "b14b835c-8852-473f-b86b-7baa4c1cf0b5", 7, true },
-                    { 5, "b14b835c-8852-473f-b86b-7baa4c1cf0b5", 8, false },
-                    { 3, "b14b835c-8852-473f-b86b-7baa4c1cf0b5", 10, true }
+                    { 2, "3bca8de8-b7d0-4f55-891f-38110cb9cac2", 2, true },
+                    { 4, "4ea1d508-7b62-4b07-a01d-89927d82762a", 1, true },
+                    { 1, "3bca8de8-b7d0-4f55-891f-38110cb9cac2", 7, true },
+                    { 5, "3bca8de8-b7d0-4f55-891f-38110cb9cac2", 8, false },
+                    { 3, "3bca8de8-b7d0-4f55-891f-38110cb9cac2", 10, true }
                 });
 
             migrationBuilder.CreateIndex(
@@ -290,6 +418,45 @@ namespace OutOfCite.Data.Migrations
                 name: "IX_Articles_AuthorId",
                 table: "Articles",
                 column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetRoleClaims_RoleId",
+                table: "AspNetRoleClaims",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "RoleNameIndex",
+                table: "AspNetRoles",
+                column: "NormalizedName",
+                unique: true,
+                filter: "[NormalizedName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserClaims_UserId",
+                table: "AspNetUserClaims",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserLogins_UserId",
+                table: "AspNetUserLogins",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserRoles_RoleId",
+                table: "AspNetUserRoles",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "EmailIndex",
+                table: "AspNetUsers",
+                column: "NormalizedEmail");
+
+            migrationBuilder.CreateIndex(
+                name: "UserNameIndex",
+                table: "AspNetUsers",
+                column: "NormalizedUserName",
+                unique: true,
+                filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FavoriteArticles_ApplicationUserId",
@@ -335,6 +502,21 @@ namespace OutOfCite.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "AspNetRoleClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserLogins");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserRoles");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
                 name: "FavoriteArticles");
 
             migrationBuilder.DropTable(
@@ -347,6 +529,12 @@ namespace OutOfCite.Data.Migrations
                 name: "UserArticleVotes");
 
             migrationBuilder.DropTable(
+                name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
                 name: "Articles");
 
             migrationBuilder.DropTable(
@@ -354,32 +542,6 @@ namespace OutOfCite.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Authors");
-
-            migrationBuilder.DeleteData(
-                table: "AspNetUsers",
-                keyColumns: new[] { "Id", "ConcurrencyStamp" },
-                keyValues: new object[] { "60b1d36f-b309-45f8-ab9e-3457687d48f6", "7f78db0a-10d2-4be4-9585-0f00ccdeca63" });
-
-            migrationBuilder.DeleteData(
-                table: "AspNetUsers",
-                keyColumns: new[] { "Id", "ConcurrencyStamp" },
-                keyValues: new object[] { "b14b835c-8852-473f-b86b-7baa4c1cf0b5", "a0139f2c-2a62-4cfb-9934-dee540cca5f2" });
-
-            migrationBuilder.DropColumn(
-                name: "Discriminator",
-                table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
-                name: "FirstName",
-                table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
-                name: "LastName",
-                table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
-                name: "LinkedIn",
-                table: "AspNetUsers");
         }
     }
 }

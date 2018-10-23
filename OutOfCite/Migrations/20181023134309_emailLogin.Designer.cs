@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OutOfCite.Data;
 
-namespace OutOfCite.Data.Migrations
+namespace OutOfCite.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181023134309_emailLogin")]
+    partial class emailLogin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,62 +63,6 @@ namespace OutOfCite.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AccessFailedCount");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256);
-
-                    b.Property<bool>("EmailConfirmed");
-
-                    b.Property<bool>("LockoutEnabled");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("PasswordHash");
-
-                    b.Property<string>("PhoneNumber");
-
-                    b.Property<bool>("PhoneNumberConfirmed");
-
-                    b.Property<string>("SecurityStamp");
-
-                    b.Property<bool>("TwoFactorEnabled");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -205,6 +151,71 @@ namespace OutOfCite.Data.Migrations
                         new { Id = 1, Name = "Neuroscience" },
                         new { Id = 2, Name = "Toxicology" },
                         new { Id = 3, Name = "Developmental Biology" }
+                    );
+                });
+
+            modelBuilder.Entity("OutOfCite.Models.ApplicationUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccessFailedCount");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("EmailConfirmed");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired();
+
+                    b.Property<string>("LastName")
+                        .IsRequired();
+
+                    b.Property<string>("LinkedIn")
+                        .IsRequired();
+
+                    b.Property<bool>("LockoutEnabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("PasswordHash");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("SecurityStamp");
+
+                    b.Property<bool>("TwoFactorEnabled");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new { Id = "3bca8de8-b7d0-4f55-891f-38110cb9cac2", AccessFailedCount = 0, ConcurrencyStamp = "5d559d97-fd63-4eca-a915-5d49c87dd391", Email = "admin@admin.com", EmailConfirmed = true, FirstName = "Admin", LastName = "Istrator", LinkedIn = "www.linkedin.com/in/admin", LockoutEnabled = false, NormalizedEmail = "ADMIN@ADMIN.COM", NormalizedUserName = "ADMIN@ADMIN.COM", PasswordHash = "AQAAAAEAACcQAAAAEAvGxsxXM5xSpvLBV6uztCYSy8Ks0ZOSp4XkOofr46/h9uqXSmwjfhhKOhLYL+hPjQ==", PhoneNumberConfirmed = false, SecurityStamp = "36a182d3-c9a3-4dee-a725-a0f1143aa234", TwoFactorEnabled = false, UserName = "admin@admin.com" },
+                        new { Id = "4ea1d508-7b62-4b07-a01d-89927d82762a", AccessFailedCount = 0, ConcurrencyStamp = "60ab3bf3-7441-4a65-9424-4dd6cf895538", Email = "wiec1369@gmail.com", EmailConfirmed = true, FirstName = "Adam", LastName = "Wieckert", LinkedIn = "www.linkedin.com/in/awieckert", LockoutEnabled = false, NormalizedEmail = "WIEC1369@GMAIL.COM", NormalizedUserName = "WIEC1369@GMAIL.COM", PasswordHash = "AQAAAAEAACcQAAAAEP4yUiM1npR9leLz4PaS3BQfqe13CimjWAncDKcQbCEIJwQlzQr8ZZYmcwQ1+xG0Jw==", PhoneNumberConfirmed = false, SecurityStamp = "bc0b4350-9fe7-49a3-b88a-28dc1dcca411", TwoFactorEnabled = false, UserName = "wiec1369@gmail.com" }
                     );
                 });
 
@@ -306,10 +317,10 @@ namespace OutOfCite.Data.Migrations
                     b.ToTable("FavoriteArticles");
 
                     b.HasData(
-                        new { Id = 1, ApplicationUserId = "60b1d36f-b309-45f8-ab9e-3457687d48f6", ArticleId = 1 },
-                        new { Id = 2, ApplicationUserId = "b14b835c-8852-473f-b86b-7baa4c1cf0b5", ArticleId = 7 },
-                        new { Id = 3, ApplicationUserId = "b14b835c-8852-473f-b86b-7baa4c1cf0b5", ArticleId = 2 },
-                        new { Id = 4, ApplicationUserId = "b14b835c-8852-473f-b86b-7baa4c1cf0b5", ArticleId = 10 }
+                        new { Id = 1, ApplicationUserId = "4ea1d508-7b62-4b07-a01d-89927d82762a", ArticleId = 1 },
+                        new { Id = 2, ApplicationUserId = "3bca8de8-b7d0-4f55-891f-38110cb9cac2", ArticleId = 7 },
+                        new { Id = 3, ApplicationUserId = "3bca8de8-b7d0-4f55-891f-38110cb9cac2", ArticleId = 2 },
+                        new { Id = 4, ApplicationUserId = "3bca8de8-b7d0-4f55-891f-38110cb9cac2", ArticleId = 10 }
                     );
                 });
 
@@ -355,10 +366,10 @@ namespace OutOfCite.Data.Migrations
                     b.ToTable("UserAffiliations");
 
                     b.HasData(
-                        new { Id = 1, AffiliationId = 1, ApplicationUserId = "b14b835c-8852-473f-b86b-7baa4c1cf0b5" },
-                        new { Id = 2, AffiliationId = 2, ApplicationUserId = "b14b835c-8852-473f-b86b-7baa4c1cf0b5" },
-                        new { Id = 3, AffiliationId = 3, ApplicationUserId = "b14b835c-8852-473f-b86b-7baa4c1cf0b5" },
-                        new { Id = 4, AffiliationId = 1, ApplicationUserId = "60b1d36f-b309-45f8-ab9e-3457687d48f6" }
+                        new { Id = 1, AffiliationId = 1, ApplicationUserId = "3bca8de8-b7d0-4f55-891f-38110cb9cac2" },
+                        new { Id = 2, AffiliationId = 2, ApplicationUserId = "3bca8de8-b7d0-4f55-891f-38110cb9cac2" },
+                        new { Id = 3, AffiliationId = 3, ApplicationUserId = "3bca8de8-b7d0-4f55-891f-38110cb9cac2" },
+                        new { Id = 4, AffiliationId = 1, ApplicationUserId = "4ea1d508-7b62-4b07-a01d-89927d82762a" }
                     );
                 });
 
@@ -384,34 +395,11 @@ namespace OutOfCite.Data.Migrations
                     b.ToTable("UserArticleVotes");
 
                     b.HasData(
-                        new { Id = 1, ApplicationUserId = "b14b835c-8852-473f-b86b-7baa4c1cf0b5", ArticleId = 7, Vote = true },
-                        new { Id = 2, ApplicationUserId = "b14b835c-8852-473f-b86b-7baa4c1cf0b5", ArticleId = 2, Vote = true },
-                        new { Id = 3, ApplicationUserId = "b14b835c-8852-473f-b86b-7baa4c1cf0b5", ArticleId = 10, Vote = true },
-                        new { Id = 4, ApplicationUserId = "60b1d36f-b309-45f8-ab9e-3457687d48f6", ArticleId = 1, Vote = true },
-                        new { Id = 5, ApplicationUserId = "b14b835c-8852-473f-b86b-7baa4c1cf0b5", ArticleId = 8, Vote = false }
-                    );
-                });
-
-            modelBuilder.Entity("OutOfCite.Models.ApplicationUser", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired();
-
-                    b.Property<string>("LastName")
-                        .IsRequired();
-
-                    b.Property<string>("LinkedIn")
-                        .IsRequired();
-
-                    b.ToTable("ApplicationUser");
-
-                    b.HasDiscriminator().HasValue("ApplicationUser");
-
-                    b.HasData(
-                        new { Id = "b14b835c-8852-473f-b86b-7baa4c1cf0b5", AccessFailedCount = 0, ConcurrencyStamp = "a0139f2c-2a62-4cfb-9934-dee540cca5f2", Email = "admin@admin.com", EmailConfirmed = true, LockoutEnabled = false, NormalizedEmail = "ADMIN@ADMIN.COM", NormalizedUserName = "ADMIN", PasswordHash = "AQAAAAEAACcQAAAAEEIhQV7ICHeYVYaZSL6V2YLBZEVBFjGHcF/pyNbPUad8GuqyZFsZ9FktKoPjcpwfkw==", PhoneNumberConfirmed = false, SecurityStamp = "ba800776-a218-4e9c-817a-7236dff24776", TwoFactorEnabled = false, UserName = "Admin", FirstName = "Admin", LastName = "Istrator", LinkedIn = "www.linkedin.com/in/admin" },
-                        new { Id = "60b1d36f-b309-45f8-ab9e-3457687d48f6", AccessFailedCount = 0, ConcurrencyStamp = "7f78db0a-10d2-4be4-9585-0f00ccdeca63", Email = "wiec1369@gmail.com", EmailConfirmed = true, LockoutEnabled = false, NormalizedEmail = "WIEC1369@GMAIL.COM", NormalizedUserName = "TERRIBROGEN", PasswordHash = "AQAAAAEAACcQAAAAECpb0kUd5XsmjxttT1soYUldY/pGDhdYSpqeSvFBa7ZZLI2SAFdIG0fcvwsEuaKypA==", PhoneNumberConfirmed = false, SecurityStamp = "7e590c5e-5c01-4f53-a8ea-4f8935fcfe63", TwoFactorEnabled = false, UserName = "TerriBrogen", FirstName = "Adam", LastName = "Wieckert", LinkedIn = "www.linkedin.com/in/awieckert" }
+                        new { Id = 1, ApplicationUserId = "3bca8de8-b7d0-4f55-891f-38110cb9cac2", ArticleId = 7, Vote = true },
+                        new { Id = 2, ApplicationUserId = "3bca8de8-b7d0-4f55-891f-38110cb9cac2", ArticleId = 2, Vote = true },
+                        new { Id = 3, ApplicationUserId = "3bca8de8-b7d0-4f55-891f-38110cb9cac2", ArticleId = 10, Vote = true },
+                        new { Id = 4, ApplicationUserId = "4ea1d508-7b62-4b07-a01d-89927d82762a", ArticleId = 1, Vote = true },
+                        new { Id = 5, ApplicationUserId = "3bca8de8-b7d0-4f55-891f-38110cb9cac2", ArticleId = 8, Vote = false }
                     );
                 });
 
@@ -425,7 +413,7 @@ namespace OutOfCite.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                    b.HasOne("OutOfCite.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -433,7 +421,7 @@ namespace OutOfCite.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                    b.HasOne("OutOfCite.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -446,7 +434,7 @@ namespace OutOfCite.Data.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                    b.HasOne("OutOfCite.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -454,7 +442,7 @@ namespace OutOfCite.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                    b.HasOne("OutOfCite.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

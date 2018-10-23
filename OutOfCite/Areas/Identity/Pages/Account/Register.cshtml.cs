@@ -61,11 +61,6 @@ namespace OutOfCite.Areas.Identity.Pages.Account {
             [Required]
             [Display(Name = "LinkedIn URL")]
             public string LinkedIn { get; set; }
-
-            [Required]
-            [Display(Name = "Username")]
-            //[IsAvailable]
-            public string UserName { get; set; }
         }
 
         //public class IsAvailable : ValidationAttribute
@@ -90,14 +85,14 @@ namespace OutOfCite.Areas.Identity.Pages.Account {
                 var user = new ApplicationUser {
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
-                    UserName = Input.UserName,
+                    UserName = Input.Email,
                     Email = Input.Email,
                     LinkedIn = Input.LinkedIn
                 };
                 // Need to check the number of returned applications users. If it is 0 then we are good to go
                 // otherwise need to return to the page and display an erro. May want to use a custom validation
 
-                var checkUserName = _userManager.Users.Where(x => x.UserName.ToLower() == user.UserName.ToLower()).Count();
+                var checkUserName = _userManager.Users.Where(x => x.Email.ToLower() == user.Email.ToLower()).Count();
 
                 if (checkUserName != 0)
                 {
