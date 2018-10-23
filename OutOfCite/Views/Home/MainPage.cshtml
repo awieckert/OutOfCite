@@ -43,29 +43,32 @@
                 <tbody>
                     @foreach (var item in Model.TopArticles)
                     {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Title)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Journal)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.JournalImpact)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Citations)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.UpVotes)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DownVotes)
-                        </td>
-                        <td>
-                            <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                        </td>
-                    </tr>
+                        @if (item.UpVotes != 0)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Title)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Journal)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.JournalImpact)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Citations)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UpVotes)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DownVotes)
+                                </td>
+                                <td>
+                                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                                </td>
+                            </tr>
+                        }
                     }
                 </tbody>
             </table>
@@ -77,7 +80,61 @@
             Top 3 Most Down Voted Articles
         </div>
         <div class="panel-body">
-            Panel content
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Title
+                        </th>
+                        <th>
+                            Journal
+                        </th>
+                        <th>
+                            Journal Impact
+                        </th>
+                        <th>
+                            Citations
+                        </th>
+                        <th>
+                            Up Votes
+                        </th>
+                        <th>
+                            Down Votes
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.WorstArticles)
+                    {
+                        @if (item.DownVotes != 0)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Title)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Journal)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.JournalImpact)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Citations)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UpVotes)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DownVotes)
+                                </td>
+                                <td>
+                                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
