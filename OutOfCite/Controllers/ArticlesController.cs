@@ -187,16 +187,16 @@ namespace OutOfCite.Controllers
                 return NotFound();
             }
 
-            var article = await _context.Articles
-                .Include(a => a.Affiliation)
-                .Include(a => a.Author)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (article == null)
+            var currentUser = await GetCurrentUserAsync();
+            string currentUserId = currentUser.Id;
+
+            var favoriteArticle = _context.FavoriteArticles.Where(x => x.ArticleId == id && x.ApplicationUserId == currentUserId).SingleOrDefault();
+            if (favoriteArticle == null)
             {
                 return NotFound();
             }
 
-            return View(article);
+            return View(favoriteArticle);
         }
 
         // POST: Articles/Delete/5
@@ -204,10 +204,10 @@ namespace OutOfCite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var article = await _context.Articles.FindAsync(id);
-            _context.Articles.Remove(article);
+            var favoriteArticle = await _context.FavoriteArticles.FindAsync(id);
+            _context.FavoriteArticles.Remove(favoriteArticle);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(FavoriteArticles));
         }
 
         private bool ArticleExists(int id)
