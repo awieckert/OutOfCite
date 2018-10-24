@@ -187,16 +187,7 @@ namespace OutOfCite.Controllers
                 return NotFound();
             }
 
-            var currentUser = await GetCurrentUserAsync();
-            string currentUserId = currentUser.Id;
-
-            var favoriteArticle = _context.FavoriteArticles.Where(x => x.ArticleId == id && x.ApplicationUserId == currentUserId).SingleOrDefault();
-            if (favoriteArticle == null)
-            {
-                return NotFound();
-            }
-
-            return View(favoriteArticle);
+            return View();
         }
 
         // POST: Articles/Delete/5
@@ -204,7 +195,11 @@ namespace OutOfCite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var favoriteArticle = await _context.FavoriteArticles.FindAsync(id);
+            var currentUser = await GetCurrentUserAsync();
+            string currentUserId = currentUser.Id;
+
+            var favoriteArticle = _context.FavoriteArticles.Where(x => x.ArticleId == id && x.ApplicationUserId == currentUserId).SingleOrDefault();
+
             _context.FavoriteArticles.Remove(favoriteArticle);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(FavoriteArticles));
