@@ -7,9 +7,10 @@
         <h5>Select An Area Of Study</h5>
     </div>
     <div class="col-sm-offset-3 col-sm-6 text-center">
-        <button><a asp-area="Identity" asp-page="/Account/Register">Neuroscience</a></button>
-        <button><a asp-area="Identity" asp-page="/Account/Login">Toxicology</a></button>
-        <button><a asp-area="Identity" asp-page="/Account/Login">Development</a></button>
+        @foreach (var item in Model.Affiliations)
+        {
+        <button><a asp-controller="Articles" asp-action="Index" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a></button>
+        }
     </div>
 
     <div class="panel panel-default panel-success col-sm-10 col-sm-offset-1">
