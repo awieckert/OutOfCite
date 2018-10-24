@@ -65,6 +65,8 @@ namespace OutOfCite.Controllers
             string currentUserId = currentUser.Id;
             var checkIfFavorited = _context.FavoriteArticles.Where(x => x.ApplicationUserId == currentUserId && x.ArticleId == id).Count();
 
+            Article article = await _context.Articles.Where(x => x.Id == id).SingleOrDefaultAsync();
+
             if (checkIfFavorited == 0)
             {
                 FavoriteArticle newFavorite = new FavoriteArticle()
@@ -78,7 +80,7 @@ namespace OutOfCite.Controllers
                 return RedirectToAction("MainPage", "Home");
             }
 
-            return View();
+            return RedirectToAction("Index", new { id = article.AffiliationId });
         }
 
         // GET: Articles/Create
