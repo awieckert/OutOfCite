@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -15,10 +16,15 @@ namespace OutOfCite.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public ArticlesController(ApplicationDbContext context)
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public ArticlesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
+
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
         // GET: Articles
         public async Task<IActionResult> Index(int id)
@@ -51,6 +57,28 @@ namespace OutOfCite.Controllers
             }
 
             return View(article);
+        }
+
+        public async Task<IActionResult> Favorite (int id)
+        {
+            var currentUser = await GetCurrentUserAsync();
+            string currentUserId = currentUser.Id;
+            var checkIfFavorited = _context.FavoriteArticles.Where(x => x.ApplicationUserId == currentUserId && x.ArticleId == id).Count();
+
+            if (checkIfFavorited == 0)
+            {
+                FavoriteArticle newFavorite = new FavoriteArticle()
+                {
+                    ApplicationUserId = currentUserId,
+                    ArticleId = id
+                };
+
+                _context.Add(newFavorite);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("MainPage", "Home");
+            }
+
+            return View();
         }
 
         // GET: Articles/Create
