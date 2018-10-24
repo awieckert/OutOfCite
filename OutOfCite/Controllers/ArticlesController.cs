@@ -59,6 +59,7 @@ namespace OutOfCite.Controllers
             return View(article);
         }
 
+        [HttpPost]
         public async Task<IActionResult> Favorite (int id)
         {
             var currentUser = await GetCurrentUserAsync();
@@ -81,6 +82,20 @@ namespace OutOfCite.Controllers
             }
 
             return RedirectToAction("Index", new { id = article.AffiliationId });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> FavoriteArticles()
+        {
+            var currentUser = await GetCurrentUserAsync();
+            string currentUserId = currentUser.Id;
+            FavoriteArticleViewModel favoriteArticles = new FavoriteArticleViewModel();
+            favoriteArticles.Articles = (from fa in _context.FavoriteArticles
+                                   join a in _context.Articles on fa.ArticleId equals a.Id
+                                   where fa.ApplicationUserId == currentUserId
+                                   select a).ToList();
+
+            return View(favoriteArticles);
         }
 
         // GET: Articles/Create
