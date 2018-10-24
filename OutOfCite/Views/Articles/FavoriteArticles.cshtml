@@ -1,0 +1,67 @@
+﻿@model OutOfCite.Models.ViewModels.FavoriteArticleViewModel
+
+<div class="row">
+    <div class="col-sm-offset-3 col-sm-6 text-center">
+        <h2>Out Of Cite</h2>
+    </div>
+    <div class="panel panel-default panel-primary col-sm-10 col-sm-offset-1">
+        <div class="panel-heading">
+            Favorite Articles
+        </div>
+        <div class="panel-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Title
+                        </th>
+                        <th>
+                            Journal
+                        </th>
+                        <th>
+                            Journal Impact
+                        </th>
+                        <th>
+                            Citations
+                        </th>
+                        <th>
+                            Up Votes
+                        </th>
+                        <th>
+                            Down Votes
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Articles)
+                    {
+                        <tr>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Title)</a>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Journal)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.JournalImpact)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Citations)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UpVotes)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DownVotes)
+                            </td>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Remove</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

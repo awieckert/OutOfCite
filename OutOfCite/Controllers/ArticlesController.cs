@@ -59,6 +59,7 @@ namespace OutOfCite.Controllers
             return View(article);
         }
 
+        [HttpPost]
         public async Task<IActionResult> Favorite (int id)
         {
             var currentUser = await GetCurrentUserAsync();
@@ -81,6 +82,20 @@ namespace OutOfCite.Controllers
             }
 
             return RedirectToAction("Index", new { id = article.AffiliationId });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> FavoriteArticles()
+        {
+            var currentUser = await GetCurrentUserAsync();
+            string currentUserId = currentUser.Id;
+            FavoriteArticleViewModel favoriteArticles = new FavoriteArticleViewModel();
+            favoriteArticles.Articles = (from fa in _context.FavoriteArticles
+                                   join a in _context.Articles on fa.ArticleId equals a.Id
+                                   where fa.ApplicationUserId == currentUserId
+                                   select a).ToList();
+
+            return View(favoriteArticles);
         }
 
         // GET: Articles/Create
@@ -172,16 +187,7 @@ namespace OutOfCite.Controllers
                 return NotFound();
             }
 
-            var article = await _context.Articles
-                .Include(a => a.Affiliation)
-                .Include(a => a.Author)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (article == null)
-            {
-                return NotFound();
-            }
-
-            return View(article);
+            return View();
         }
 
         // POST: Articles/Delete/5
@@ -189,10 +195,14 @@ namespace OutOfCite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var article = await _context.Articles.FindAsync(id);
-            _context.Articles.Remove(article);
+            var currentUser = await GetCurrentUserAsync();
+            string currentUserId = currentUser.Id;
+
+            var favoriteArticle = _context.FavoriteArticles.Where(x => x.ArticleId == id && x.ApplicationUserId == currentUserId).SingleOrDefault();
+
+            _context.FavoriteArticles.Remove(favoriteArticle);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(FavoriteArticles));
         }
 
         private bool ArticleExists(int id)

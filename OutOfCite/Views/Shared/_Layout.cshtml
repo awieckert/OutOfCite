@@ -39,7 +39,12 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Departments</a></li>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Departments</a></li>
+                        <li><a asp-area="" asp-controller="Articles" asp-action="FavoriteArticles">Favorited Articles</a></li>
+                    }
+
                 </ul>
                 <partial name="_LoginPartial" />
             </div>
