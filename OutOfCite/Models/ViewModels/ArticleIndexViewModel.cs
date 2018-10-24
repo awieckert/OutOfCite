@@ -14,8 +14,6 @@ namespace OutOfCite.Models.ViewModels
 
         public ArticleIndexViewModel(ApplicationDbContext context, int id)
         {
-            //List<Article> lowImpactArticles = context.Articles.Where(x => (x.AffiliationId == id) && (x.JournalImpact < 5)).ToList();
-
             var articlesWithAuthors = (from a in context.Articles
                                       where a.AffiliationId == id
                                       select new
