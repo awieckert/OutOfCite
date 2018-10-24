@@ -31,6 +31,7 @@
                 @if (SignInManager.IsSignedIn(User))
                 {
                     <a asp-area="" asp-controller="Home" asp-action="MainPage" class="navbar-brand">OutOfCite</a>
+                    <a asp-area="" asp-controller="Articles" asp-action="FavoriteArticles" class="navbar-brand">Favorited Articles</a>
                 }
                 else
                 {
