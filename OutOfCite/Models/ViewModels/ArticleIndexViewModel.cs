@@ -14,12 +14,26 @@ namespace OutOfCite.Models.ViewModels
 
         public ArticleIndexViewModel(ApplicationDbContext context, int id)
         {
-            List<Article> lowImpactArticles = context.Articles.Where(x => (x.AffiliationId == id) && (x.JournalImpact < 5)).ToList();
+            //List<Article> lowImpactArticles = context.Articles.Where(x => (x.AffiliationId == id) && (x.JournalImpact < 5)).ToList();
 
-            foreach (var item in lowImpactArticles)
+            var articlesWithAuthors = (from a in context.Articles
+                                      where a.AffiliationId == id
+                                      select new
+                                      {
+                                          Article = a,
+                                          Author =
+                                          (from author in context.Authors
+                                           where a.AuthorId == author.Id
+                                           select author).SingleOrDefault()
+                                      }).ToList();
+
+            foreach (var item in articlesWithAuthors)
             {
-                //var theH
-                //if ()
+                if (item.Article.JournalImpact < 5 && item.Author.HIndex >= 25)
+                {
+                    item.Article.Author = item.Author;
+                    Articles.Add(item.Article);
+                }
             }
 
             Affiliation = context.Affiliations.Where(x => x.Id == id).SingleOrDefault();
