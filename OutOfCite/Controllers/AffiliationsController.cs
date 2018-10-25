@@ -69,7 +69,12 @@ namespace OutOfCite.Controllers
 
                 var checkIfExists = _context.Affiliations.Where(x => x.Name.ToLower() == affiliation.Name.ToLower()).SingleOrDefault();
 
-                if (checkIfExists != null)
+                var checkUserAffiliations = (from uf in _context.UserAffiliations
+                                            join af in _context.Affiliations on uf.AffiliationId equals af.Id
+                                            where uf.ApplicationUserId == currentUserId && af.Name == affiliation.Name
+                                            select af).SingleOrDefault();
+
+                if (checkIfExists != null && checkUserAffiliations == null)
                 {
                     UserAffiliation newUserAffiliation = new UserAffiliation()
                     {
@@ -80,7 +85,7 @@ namespace OutOfCite.Controllers
                     _context.Add(newUserAffiliation);
                     await _context.SaveChangesAsync();
                     return RedirectToAction("MainPage", "Home");
-                } else
+                } else if (checkIfExists == null && checkUserAffiliations == null)
                 {
                     Affiliation newAffiliation = new Affiliation()
                     {
@@ -89,10 +94,6 @@ namespace OutOfCite.Controllers
 
                     _context.Add(newAffiliation);
                     await _context.SaveChangesAsync();
-
-                    //var theNewAffiliation = (from a in _context.Affiliations
-                    //                        where a.Name == affiliation.Name
-                    //                        select a).SingleOrDefault();
 
                     UserAffiliation newUserAffiliation = new UserAffiliation()
                     {
@@ -105,7 +106,7 @@ namespace OutOfCite.Controllers
                     return RedirectToAction("MainPage", "Home");
                 }
             }
-            return View(affiliation);
+            return RedirectToAction("MainPage", "Home");
         }
 
         // GET: Affiliations/Edit/5
