@@ -7,10 +7,9 @@
         <h5>Select An Area Of Study</h5>
     </div>
     <div class="col-sm-offset-3 col-sm-6 text-center">
-        @foreach (var item in Model.Affiliations)
-        {
-        <button><a asp-controller="Articles" asp-action="Index" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a></button>
-        }
+        <button><a asp-controller="Articles" asp-action="Index" asp-route-id="1">Neuroscience</a></button>
+        <button><a asp-controller="Articles" asp-action="Index" asp-route-id="2">Toxicology</a></button>
+        <button><a asp-controller="Articles" asp-action="Index" asp-route-id="3">Developmental Biology</a></button>
     </div>
 
     <div class="panel panel-default panel-success col-sm-10 col-sm-offset-1">
