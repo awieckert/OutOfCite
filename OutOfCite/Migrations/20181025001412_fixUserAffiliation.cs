@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OutOfCite.Migrations
 {
-    public partial class emailLogin : Migration
+    public partial class fixUserAffiliation : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -185,6 +185,32 @@ namespace OutOfCite.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserAffiliations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ApplicationUserId = table.Column<string>(nullable: false),
+                    AffiliationId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserAffiliations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserAffiliations_Affiliations_AffiliationId",
+                        column: x => x.AffiliationId,
+                        principalTable: "Affiliations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserAffiliations_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Articles",
                 columns: table => new
                 {
@@ -269,33 +295,6 @@ namespace OutOfCite.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserAffiliations",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ApplicationUserId = table.Column<string>(nullable: false),
-                    AffiliationId = table.Column<int>(nullable: false),
-                    ArticleId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserAffiliations", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserAffiliations_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UserAffiliations_Articles_ArticleId",
-                        column: x => x.ArticleId,
-                        principalTable: "Articles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "UserArticleVotes",
                 columns: table => new
                 {
@@ -337,8 +336,8 @@ namespace OutOfCite.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LinkedIn", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "3bca8de8-b7d0-4f55-891f-38110cb9cac2", 0, "5d559d97-fd63-4eca-a915-5d49c87dd391", "admin@admin.com", true, "Admin", "Istrator", "www.linkedin.com/in/admin", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEAvGxsxXM5xSpvLBV6uztCYSy8Ks0ZOSp4XkOofr46/h9uqXSmwjfhhKOhLYL+hPjQ==", null, false, "36a182d3-c9a3-4dee-a725-a0f1143aa234", false, "admin@admin.com" },
-                    { "4ea1d508-7b62-4b07-a01d-89927d82762a", 0, "60ab3bf3-7441-4a65-9424-4dd6cf895538", "wiec1369@gmail.com", true, "Adam", "Wieckert", "www.linkedin.com/in/awieckert", false, null, "WIEC1369@GMAIL.COM", "WIEC1369@GMAIL.COM", "AQAAAAEAACcQAAAAEP4yUiM1npR9leLz4PaS3BQfqe13CimjWAncDKcQbCEIJwQlzQr8ZZYmcwQ1+xG0Jw==", null, false, "bc0b4350-9fe7-49a3-b88a-28dc1dcca411", false, "wiec1369@gmail.com" }
+                    { "35f3b98f-01bb-45ab-93ee-ab6b34a1b966", 0, "841ebebe-a01c-4552-ac40-6250045c85ed", "admin@admin.com", true, "Admin", "Istrator", "www.linkedin.com/in/admin", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEAsMBUXsx//J+zC6sjG6LDmwpT7Lj84ZYR7QzqXiWlPRBk448mnL/ZgLJ7zp9axQ4w==", null, false, "32ca373c-44e3-4e75-9ef8-e098b15de683", false, "admin@admin.com" },
+                    { "41839694-39aa-4bfd-a750-4b342ed1402e", 0, "f5111ca6-adad-466f-9979-4075aa4e4a93", "wiec1369@gmail.com", true, "Adam", "Wieckert", "www.linkedin.com/in/awieckert", false, null, "WIEC1369@GMAIL.COM", "WIEC1369@GMAIL.COM", "AQAAAAEAACcQAAAAEOw+/Seg5Eo58DLnP79S9zVLmAF0tcYkruh/pmYcb0uOPIs0ZBsgONuP3pLr8xPUnA==", null, false, "b8b57b46-f4e6-4455-9289-c5fcd2486404", false, "wiec1369@gmail.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -377,13 +376,13 @@ namespace OutOfCite.Migrations
 
             migrationBuilder.InsertData(
                 table: "UserAffiliations",
-                columns: new[] { "Id", "AffiliationId", "ApplicationUserId", "ArticleId" },
+                columns: new[] { "Id", "AffiliationId", "ApplicationUserId" },
                 values: new object[,]
                 {
-                    { 1, 1, "3bca8de8-b7d0-4f55-891f-38110cb9cac2", null },
-                    { 2, 2, "3bca8de8-b7d0-4f55-891f-38110cb9cac2", null },
-                    { 3, 3, "3bca8de8-b7d0-4f55-891f-38110cb9cac2", null },
-                    { 4, 1, "4ea1d508-7b62-4b07-a01d-89927d82762a", null }
+                    { 1, 1, "35f3b98f-01bb-45ab-93ee-ab6b34a1b966" },
+                    { 2, 2, "35f3b98f-01bb-45ab-93ee-ab6b34a1b966" },
+                    { 3, 3, "35f3b98f-01bb-45ab-93ee-ab6b34a1b966" },
+                    { 4, 1, "41839694-39aa-4bfd-a750-4b342ed1402e" }
                 });
 
             migrationBuilder.InsertData(
@@ -391,10 +390,10 @@ namespace OutOfCite.Migrations
                 columns: new[] { "Id", "ApplicationUserId", "ArticleId" },
                 values: new object[,]
                 {
-                    { 3, "3bca8de8-b7d0-4f55-891f-38110cb9cac2", 2 },
-                    { 1, "4ea1d508-7b62-4b07-a01d-89927d82762a", 1 },
-                    { 2, "3bca8de8-b7d0-4f55-891f-38110cb9cac2", 7 },
-                    { 4, "3bca8de8-b7d0-4f55-891f-38110cb9cac2", 10 }
+                    { 3, "35f3b98f-01bb-45ab-93ee-ab6b34a1b966", 2 },
+                    { 1, "41839694-39aa-4bfd-a750-4b342ed1402e", 1 },
+                    { 2, "35f3b98f-01bb-45ab-93ee-ab6b34a1b966", 7 },
+                    { 4, "35f3b98f-01bb-45ab-93ee-ab6b34a1b966", 10 }
                 });
 
             migrationBuilder.InsertData(
@@ -402,11 +401,11 @@ namespace OutOfCite.Migrations
                 columns: new[] { "Id", "ApplicationUserId", "ArticleId", "Vote" },
                 values: new object[,]
                 {
-                    { 2, "3bca8de8-b7d0-4f55-891f-38110cb9cac2", 2, true },
-                    { 4, "4ea1d508-7b62-4b07-a01d-89927d82762a", 1, true },
-                    { 1, "3bca8de8-b7d0-4f55-891f-38110cb9cac2", 7, true },
-                    { 5, "3bca8de8-b7d0-4f55-891f-38110cb9cac2", 8, false },
-                    { 3, "3bca8de8-b7d0-4f55-891f-38110cb9cac2", 10, true }
+                    { 2, "35f3b98f-01bb-45ab-93ee-ab6b34a1b966", 2, true },
+                    { 4, "41839694-39aa-4bfd-a750-4b342ed1402e", 1, true },
+                    { 1, "35f3b98f-01bb-45ab-93ee-ab6b34a1b966", 7, true },
+                    { 5, "35f3b98f-01bb-45ab-93ee-ab6b34a1b966", 8, false },
+                    { 3, "35f3b98f-01bb-45ab-93ee-ab6b34a1b966", 10, true }
                 });
 
             migrationBuilder.CreateIndex(
@@ -479,14 +478,14 @@ namespace OutOfCite.Migrations
                 column: "ArticleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserAffiliations_AffiliationId",
+                table: "UserAffiliations",
+                column: "AffiliationId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserAffiliations_ApplicationUserId",
                 table: "UserAffiliations",
                 column: "ApplicationUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserAffiliations_ArticleId",
-                table: "UserAffiliations",
-                column: "ArticleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserArticleVotes_ApplicationUserId",

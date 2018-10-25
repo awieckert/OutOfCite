@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,10 +15,15 @@ namespace OutOfCite.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public AffiliationsController(ApplicationDbContext context)
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public AffiliationsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
+
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
         // GET: Affiliations
         public async Task<IActionResult> Index()
@@ -58,19 +64,46 @@ namespace OutOfCite.Controllers
         {
             if (ModelState.IsValid)
             {
+                string currentUserId = (await GetCurrentUserAsync()).Id;
+
+
                 var checkIfExists = _context.Affiliations.Where(x => x.Name.ToLower() == affiliation.Name.ToLower()).SingleOrDefault();
 
                 if (checkIfExists != null)
                 {
-                    UserAffiliation newAffiliation = new UserAffiliation()
+                    UserAffiliation newUserAffiliation = new UserAffiliation()
                     {
-
+                        AffiliationId = checkIfExists.Id,
+                        ApplicationUserId = currentUserId
                     };
-                }
 
-                _context.Add(affiliation);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                    _context.Add(newUserAffiliation);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("MainPage", "Home");
+                } else
+                {
+                    Affiliation newAffiliation = new Affiliation()
+                    {
+                        Name = affiliation.Name
+                    };
+
+                    _context.Add(newAffiliation);
+                    await _context.SaveChangesAsync();
+
+                    //var theNewAffiliation = (from a in _context.Affiliations
+                    //                        where a.Name == affiliation.Name
+                    //                        select a).SingleOrDefault();
+
+                    UserAffiliation newUserAffiliation = new UserAffiliation()
+                    {
+                        AffiliationId = newAffiliation.Id,
+                        ApplicationUserId = currentUserId
+                    };
+
+                    _context.Add(newUserAffiliation);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("MainPage", "Home");
+                }
             }
             return View(affiliation);
         }
