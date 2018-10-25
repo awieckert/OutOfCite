@@ -30,6 +30,7 @@ namespace OutOfCite.Models
         public string Journal { get; set; }
 
         [Required]
+        [Display(Name ="Journal Impact Factor")]
         public double JournalImpact { get; set; }
 
         [Required]
