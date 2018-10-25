@@ -101,8 +101,6 @@ namespace OutOfCite.Controllers
         // GET: Articles/Create
         public IActionResult Create()
         {
-            ViewData["AffiliationId"] = new SelectList(_context.Affiliations, "Id", "Id");
-            ViewData["AuthorId"] = new SelectList(_context.Authors, "Id", "FirstName");
             return View();
         }
 
@@ -111,17 +109,58 @@ namespace OutOfCite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,AuthorId,AffiliationId,Title,Abstract,URL,Journal,JournalImpact,Citations")] Article article)
+        public async Task<IActionResult> Create(ArticleCreateViewModel newArticleInfo)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(article);
+                var checkAffiliation = (from af in _context.Affiliations
+                                        where af.Name.ToLower() == newArticleInfo.Affiliation.Name.ToLower()
+                                        select af).SingleOrDefault();
+
+                var checkAuthor = (from au in _context.Authors
+                                   where au.FirstName.ToLower() == newArticleInfo.Author.FirstName.ToLower()
+                                   && au.LastName.ToLower() == newArticleInfo.Author.LastName.ToLower()
+                                   select au).SingleOrDefault();
+
+                if (checkAffiliation == null)
+                {
+                    Affiliation newAffiliation = new Affiliation()
+                    {
+                        Name = newArticleInfo.Affiliation.Name
+                    };
+
+                    _context.Affiliations.Add(newAffiliation);
+                    await _context.SaveChangesAsync();
+
+                    newArticleInfo.Article.AffiliationId = newAffiliation.Id;
+                } else
+                {
+                    newArticleInfo.Article.AffiliationId = checkAffiliation.Id;
+                }
+
+                if (checkAuthor == null)
+                {
+                    Author newAuthor = new Author()
+                    {
+                        FirstName = newArticleInfo.Author.FirstName,
+                        LastName = newArticleInfo.Author.LastName,
+                        HIndex = newArticleInfo.Author.HIndex
+                    };
+
+                    _context.Authors.Add(newAuthor);
+                    await _context.SaveChangesAsync();
+
+                    newArticleInfo.Article.AuthorId = newAuthor.Id;
+                } else
+                {
+                    newArticleInfo.Article.AuthorId = checkAuthor.Id;
+                }
+
+                _context.Articles.Add(newArticleInfo.Article);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("MainPage", "Home");
             }
-            ViewData["AffiliationId"] = new SelectList(_context.Affiliations, "Id", "Id", article.AffiliationId);
-            ViewData["AuthorId"] = new SelectList(_context.Authors, "Id", "FirstName", article.AuthorId);
-            return View(article);
+            return View();
         }
 
         // GET: Articles/Edit/5

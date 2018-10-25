@@ -1,5 +1,4 @@
-﻿@model OutOfCite.Models.Article
-
+﻿@model OutOfCite.Models.ViewModels.ArticleCreateViewModel
 @{
     ViewData["Title"] = "Create";
 }
@@ -13,42 +12,54 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="AuthorId" class="control-label"></label>
-                <select asp-for="AuthorId" class ="form-control" asp-items="ViewBag.AuthorId"></select>
+                <label asp-for="Article.Title" class="control-label"></label>
+                <input asp-for="Article.Title" class="form-control">
+                <span asp-validation-for="Article.Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AffiliationId" class="control-label"></label>
-                <select asp-for="AffiliationId" class ="form-control" asp-items="ViewBag.AffiliationId"></select>
+                <label asp-for="Affiliation.Name" class="control-label"></label>
+                <input asp-for="Affiliation.Name" class="form-control">
+                <span asp-validation-for="Affiliation.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+                <label asp-for="Article.Abstract" class="control-label"></label>
+                <input asp-for="Article.Abstract" class="form-control">
+                <span asp-validation-for="Article.Abstract" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Abstract" class="control-label"></label>
-                <input asp-for="Abstract" class="form-control" />
-                <span asp-validation-for="Abstract" class="text-danger"></span>
+                <label asp-for="Article.URL" class="control-label"></label>
+                <input asp-for="Article.URL" class="form-control" />
+                <span asp-validation-for="Article.URL" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="URL" class="control-label"></label>
-                <input asp-for="URL" class="form-control" />
-                <span asp-validation-for="URL" class="text-danger"></span>
+                <label asp-for="Article.Journal" class="control-label"></label>
+                <input asp-for="Article.Journal" class="form-control" />
+                <span asp-validation-for="Article.Journal" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Journal" class="control-label"></label>
-                <input asp-for="Journal" class="form-control" />
-                <span asp-validation-for="Journal" class="text-danger"></span>
+                <label asp-for="Article.JournalImpact" class="control-label"></label>
+                <input asp-for="Article.JournalImpact" class="form-control" />
+                <span asp-validation-for="Article.JournalImpact" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="JournalImpact" class="control-label"></label>
-                <input asp-for="JournalImpact" class="form-control" />
-                <span asp-validation-for="JournalImpact" class="text-danger"></span>
+                <label asp-for="Article.Citations" class="control-label"></label>
+                <input asp-for="Article.Citations" class="form-control" />
+                <span asp-validation-for="Article.Citations" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Citations" class="control-label"></label>
-                <input asp-for="Citations" class="form-control" />
-                <span asp-validation-for="Citations" class="text-danger"></span>
+                <label asp-for="Author.FirstName" class="control-label"></label>
+                <input asp-for="Author.FirstName" class="form-control" />
+                <span asp-validation-for="Author.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Author.LastName" class="control-label"></label>
+                <input asp-for="Author.LastName" class="form-control" />
+                <span asp-validation-for="Author.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Author.HIndex" class="control-label"></label>
+                <input asp-for="Author.HIndex" class="form-control" />
+                <span asp-validation-for="Author.HIndex" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
