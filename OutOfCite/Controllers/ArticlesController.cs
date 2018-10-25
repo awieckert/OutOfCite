@@ -179,6 +179,36 @@ namespace OutOfCite.Controllers
             return View(article);
         }
 
+        public async Task<IActionResult> Vote(int articleId, bool vote, int affiliationId)
+        {
+            string currentUserId = (await GetCurrentUserAsync()).Id;
+
+            UserArticleVote checkIfUserVoted = (from uv in _context.UserArticleVotes
+                                   where uv.ApplicationUserId == currentUserId && uv.ArticleId == articleId
+                                   select uv).SingleOrDefault();
+
+            if (checkIfUserVoted != null)
+            {
+                checkIfUserVoted.Vote = vote;
+
+                _context.UserArticleVotes.Update(checkIfUserVoted);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index", new { id = affiliationId });
+            } else
+            {
+                UserArticleVote userArticleVote = new UserArticleVote()
+                {
+                    ApplicationUserId = currentUserId,
+                    ArticleId = articleId,
+                    Vote = vote
+                };
+
+                _context.UserArticleVotes.Add(userArticleVote);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index", new { id = affiliationId });
+            }
+        }
+
         // GET: Articles/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {

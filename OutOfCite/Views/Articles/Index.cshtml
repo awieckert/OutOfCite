@@ -63,7 +63,8 @@
                                 "Articles",                                                   // controllerName
                                 new {                                                     // routeValues
                                     articleId = item.Id,
-                                    Vote = true
+                                    Vote = true,
+                                    affiliationId = Model.Affiliation.Id
                                 },
                                 null                                                      // htmlAttributes
                             )
@@ -75,7 +76,8 @@
                                 "Articles",                                                   // controllerName
                                 new {                                                     // routeValues
                                     articleId = item.Id,
-                                    Vote = false
+                                    Vote = false,
+                                    affiliationId = Model.Affiliation.Id
                                 },
                                 null                                                      // htmlAttributes
                             )
@@ -83,12 +85,13 @@
                         } else if (@Model.CanUserVote && @item.UserVote == false) {
                         <td>
                             @Html.ActionLink(
-                                "Change to Up-Vote",                                                  // linkText
+                                "Change Vote Up-Vote",                                                  // linkText
                                 "Vote",                                    // actionName
                                 "Articles",                                                   // controllerName
                                 new {                                                     // routeValues
                                     articleId = item.Id,
-                                    Vote = true
+                                    Vote = true,
+                                    affiliationId = Model.Affiliation.Id
                                 },
                                 null                                                      // htmlAttributes
                             )
@@ -96,12 +99,13 @@
                         } else if (@Model.CanUserVote && @item.UserVote == true) {
                         <td>
                             @Html.ActionLink(
-                                "Down-Vote",                                                  // linkText
+                                "Change Vote Down-Vote",                                                  // linkText
                                 "Vote",                                    // actionName
                                 "Articles",                                                   // controllerName
                                 new {                                                     // routeValues
                                     articleId = item.Id,
-                                    Vote = false
+                                    Vote = false,
+                                    affiliationId = Model.Affiliation.Id
                                 },
                                 null                                                      // htmlAttributes
                             )
