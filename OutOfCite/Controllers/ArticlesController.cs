@@ -34,7 +34,7 @@ namespace OutOfCite.Controllers
                 return NotFound();
             }
 
-            ArticleIndexViewModel articleIndex = new ArticleIndexViewModel(_context, id); 
+            ArticleIndexViewModel articleIndex = new ArticleIndexViewModel(_context, id, (await GetCurrentUserAsync()).Id); 
 
             return View(articleIndex);
         }
