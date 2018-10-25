@@ -36,6 +36,9 @@ namespace OutOfCite.Models
         public double Citations { get; set; }
 
         [NotMapped]
+        public bool? UserVote { get; set; }
+
+        [NotMapped]
         public int UpVotes { get; set; }
 
         [NotMapped]

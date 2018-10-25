@@ -34,7 +34,7 @@ namespace OutOfCite.Controllers
                 return NotFound();
             }
 
-            ArticleIndexViewModel articleIndex = new ArticleIndexViewModel(_context, id); 
+            ArticleIndexViewModel articleIndex = new ArticleIndexViewModel(_context, id, (await GetCurrentUserAsync()).Id); 
 
             return View(articleIndex);
         }
@@ -177,6 +177,36 @@ namespace OutOfCite.Controllers
             ViewData["AffiliationId"] = new SelectList(_context.Affiliations, "Id", "Id", article.AffiliationId);
             ViewData["AuthorId"] = new SelectList(_context.Authors, "Id", "FirstName", article.AuthorId);
             return View(article);
+        }
+
+        public async Task<IActionResult> Vote(int articleId, bool vote, int affiliationId)
+        {
+            string currentUserId = (await GetCurrentUserAsync()).Id;
+
+            UserArticleVote checkIfUserVoted = (from uv in _context.UserArticleVotes
+                                   where uv.ApplicationUserId == currentUserId && uv.ArticleId == articleId
+                                   select uv).SingleOrDefault();
+
+            if (checkIfUserVoted != null)
+            {
+                checkIfUserVoted.Vote = vote;
+
+                _context.UserArticleVotes.Update(checkIfUserVoted);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index", new { id = affiliationId });
+            } else
+            {
+                UserArticleVote userArticleVote = new UserArticleVote()
+                {
+                    ApplicationUserId = currentUserId,
+                    ArticleId = articleId,
+                    Vote = vote
+                };
+
+                _context.UserArticleVotes.Add(userArticleVote);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index", new { id = affiliationId });
+            }
         }
 
         // GET: Articles/Delete/5
