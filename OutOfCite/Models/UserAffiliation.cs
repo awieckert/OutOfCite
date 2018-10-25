@@ -19,6 +19,6 @@ namespace OutOfCite.Models
 
         public ApplicationUser ApplicationUser { get; set; }
 
-        public Article Article { get; set; }
+        public Affiliation Affiliation { get; set; }
     }
 }
