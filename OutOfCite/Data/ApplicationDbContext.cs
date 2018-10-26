@@ -369,6 +369,12 @@ namespace OutOfCite.Data
                     Vote = false
                 }
                 );
+
+            modelBuilder.Entity<ApplicationUser>()
+                        .HasMany(uv => uv.UserArticleVotes)
+                        .WithOne(au => au.ApplicationUser)
+                        .OnDelete(DeleteBehavior.SetNull);
+
         }
     }
 }
