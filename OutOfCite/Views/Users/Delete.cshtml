@@ -1,0 +1,12 @@
+﻿@model OutOfCite.Models.ApplicationUser
+
+<h1 class="alert-danger">WARNING</h1>
+
+<h3>@Model.FullName you are about to delete your account!</h3>
+<div>
+ 
+    <form asp-action="PostDelete">
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Details">Back To Safety!</a>
+    </form>
+</div>

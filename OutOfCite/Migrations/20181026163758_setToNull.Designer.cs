@@ -10,8 +10,8 @@ using OutOfCite.Data;
 namespace OutOfCite.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181025001412_fixUserAffiliation")]
-    partial class fixUserAffiliation
+    [Migration("20181026163758_setToNull")]
+    partial class setToNull
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -214,8 +214,8 @@ namespace OutOfCite.Migrations
                     b.ToTable("AspNetUsers");
 
                     b.HasData(
-                        new { Id = "35f3b98f-01bb-45ab-93ee-ab6b34a1b966", AccessFailedCount = 0, ConcurrencyStamp = "841ebebe-a01c-4552-ac40-6250045c85ed", Email = "admin@admin.com", EmailConfirmed = true, FirstName = "Admin", LastName = "Istrator", LinkedIn = "www.linkedin.com/in/admin", LockoutEnabled = false, NormalizedEmail = "ADMIN@ADMIN.COM", NormalizedUserName = "ADMIN@ADMIN.COM", PasswordHash = "AQAAAAEAACcQAAAAEAsMBUXsx//J+zC6sjG6LDmwpT7Lj84ZYR7QzqXiWlPRBk448mnL/ZgLJ7zp9axQ4w==", PhoneNumberConfirmed = false, SecurityStamp = "32ca373c-44e3-4e75-9ef8-e098b15de683", TwoFactorEnabled = false, UserName = "admin@admin.com" },
-                        new { Id = "41839694-39aa-4bfd-a750-4b342ed1402e", AccessFailedCount = 0, ConcurrencyStamp = "f5111ca6-adad-466f-9979-4075aa4e4a93", Email = "wiec1369@gmail.com", EmailConfirmed = true, FirstName = "Adam", LastName = "Wieckert", LinkedIn = "www.linkedin.com/in/awieckert", LockoutEnabled = false, NormalizedEmail = "WIEC1369@GMAIL.COM", NormalizedUserName = "WIEC1369@GMAIL.COM", PasswordHash = "AQAAAAEAACcQAAAAEOw+/Seg5Eo58DLnP79S9zVLmAF0tcYkruh/pmYcb0uOPIs0ZBsgONuP3pLr8xPUnA==", PhoneNumberConfirmed = false, SecurityStamp = "b8b57b46-f4e6-4455-9289-c5fcd2486404", TwoFactorEnabled = false, UserName = "wiec1369@gmail.com" }
+                        new { Id = "42142701-a034-43e5-a6b3-198e64f4b709", AccessFailedCount = 0, ConcurrencyStamp = "5daedf85-25b3-4854-868d-5c6c187aa1cf", Email = "admin@admin.com", EmailConfirmed = true, FirstName = "Admin", LastName = "Istrator", LinkedIn = "www.linkedin.com/in/admin", LockoutEnabled = false, NormalizedEmail = "ADMIN@ADMIN.COM", NormalizedUserName = "ADMIN@ADMIN.COM", PasswordHash = "AQAAAAEAACcQAAAAEJEILM5Xox8Wr3lKfHr77QOUZdXvFulEN9I4ggC22ssfogeE2LvSJDhwnjwEjHIdGg==", PhoneNumberConfirmed = false, SecurityStamp = "0d243934-6b9d-4403-bac4-1f9712029e60", TwoFactorEnabled = false, UserName = "admin@admin.com" },
+                        new { Id = "16126b04-184e-4588-b42c-3017ca1c17a6", AccessFailedCount = 0, ConcurrencyStamp = "8e18c843-9517-4f5c-b006-747d68705bef", Email = "wiec1369@gmail.com", EmailConfirmed = true, FirstName = "Adam", LastName = "Wieckert", LinkedIn = "www.linkedin.com/in/awieckert", LockoutEnabled = false, NormalizedEmail = "WIEC1369@GMAIL.COM", NormalizedUserName = "WIEC1369@GMAIL.COM", PasswordHash = "AQAAAAEAACcQAAAAEK4RcCIzyBIZl46pKnobJJiJ4DtuzYfxFLM4nI5v8w8sMu/9p7sd0uiGqHkoB6r+yA==", PhoneNumberConfirmed = false, SecurityStamp = "ed8d636d-b001-46cc-8a9e-685e12888c7f", TwoFactorEnabled = false, UserName = "wiec1369@gmail.com" }
                     );
                 });
 
@@ -317,10 +317,10 @@ namespace OutOfCite.Migrations
                     b.ToTable("FavoriteArticles");
 
                     b.HasData(
-                        new { Id = 1, ApplicationUserId = "41839694-39aa-4bfd-a750-4b342ed1402e", ArticleId = 1 },
-                        new { Id = 2, ApplicationUserId = "35f3b98f-01bb-45ab-93ee-ab6b34a1b966", ArticleId = 7 },
-                        new { Id = 3, ApplicationUserId = "35f3b98f-01bb-45ab-93ee-ab6b34a1b966", ArticleId = 2 },
-                        new { Id = 4, ApplicationUserId = "35f3b98f-01bb-45ab-93ee-ab6b34a1b966", ArticleId = 10 }
+                        new { Id = 1, ApplicationUserId = "16126b04-184e-4588-b42c-3017ca1c17a6", ArticleId = 1 },
+                        new { Id = 2, ApplicationUserId = "42142701-a034-43e5-a6b3-198e64f4b709", ArticleId = 7 },
+                        new { Id = 3, ApplicationUserId = "42142701-a034-43e5-a6b3-198e64f4b709", ArticleId = 2 },
+                        new { Id = 4, ApplicationUserId = "42142701-a034-43e5-a6b3-198e64f4b709", ArticleId = 10 }
                     );
                 });
 
@@ -364,10 +364,10 @@ namespace OutOfCite.Migrations
                     b.ToTable("UserAffiliations");
 
                     b.HasData(
-                        new { Id = 1, AffiliationId = 1, ApplicationUserId = "35f3b98f-01bb-45ab-93ee-ab6b34a1b966" },
-                        new { Id = 2, AffiliationId = 2, ApplicationUserId = "35f3b98f-01bb-45ab-93ee-ab6b34a1b966" },
-                        new { Id = 3, AffiliationId = 3, ApplicationUserId = "35f3b98f-01bb-45ab-93ee-ab6b34a1b966" },
-                        new { Id = 4, AffiliationId = 1, ApplicationUserId = "41839694-39aa-4bfd-a750-4b342ed1402e" }
+                        new { Id = 1, AffiliationId = 1, ApplicationUserId = "42142701-a034-43e5-a6b3-198e64f4b709" },
+                        new { Id = 2, AffiliationId = 2, ApplicationUserId = "42142701-a034-43e5-a6b3-198e64f4b709" },
+                        new { Id = 3, AffiliationId = 3, ApplicationUserId = "42142701-a034-43e5-a6b3-198e64f4b709" },
+                        new { Id = 4, AffiliationId = 1, ApplicationUserId = "16126b04-184e-4588-b42c-3017ca1c17a6" }
                     );
                 });
 
@@ -393,11 +393,11 @@ namespace OutOfCite.Migrations
                     b.ToTable("UserArticleVotes");
 
                     b.HasData(
-                        new { Id = 1, ApplicationUserId = "35f3b98f-01bb-45ab-93ee-ab6b34a1b966", ArticleId = 7, Vote = true },
-                        new { Id = 2, ApplicationUserId = "35f3b98f-01bb-45ab-93ee-ab6b34a1b966", ArticleId = 2, Vote = true },
-                        new { Id = 3, ApplicationUserId = "35f3b98f-01bb-45ab-93ee-ab6b34a1b966", ArticleId = 10, Vote = true },
-                        new { Id = 4, ApplicationUserId = "41839694-39aa-4bfd-a750-4b342ed1402e", ArticleId = 1, Vote = true },
-                        new { Id = 5, ApplicationUserId = "35f3b98f-01bb-45ab-93ee-ab6b34a1b966", ArticleId = 8, Vote = false }
+                        new { Id = 1, ApplicationUserId = "42142701-a034-43e5-a6b3-198e64f4b709", ArticleId = 7, Vote = true },
+                        new { Id = 2, ApplicationUserId = "42142701-a034-43e5-a6b3-198e64f4b709", ArticleId = 2, Vote = true },
+                        new { Id = 3, ApplicationUserId = "42142701-a034-43e5-a6b3-198e64f4b709", ArticleId = 10, Vote = true },
+                        new { Id = 4, ApplicationUserId = "16126b04-184e-4588-b42c-3017ca1c17a6", ArticleId = 1, Vote = true },
+                        new { Id = 5, ApplicationUserId = "42142701-a034-43e5-a6b3-198e64f4b709", ArticleId = 8, Vote = false }
                     );
                 });
 
@@ -502,7 +502,7 @@ namespace OutOfCite.Migrations
                     b.HasOne("OutOfCite.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("UserArticleVotes")
                         .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("OutOfCite.Models.Article", "Article")
                         .WithMany()

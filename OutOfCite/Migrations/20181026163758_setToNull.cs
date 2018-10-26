@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OutOfCite.Migrations
 {
-    public partial class fixUserAffiliation : Migration
+    public partial class setToNull : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -300,7 +300,7 @@ namespace OutOfCite.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ApplicationUserId = table.Column<string>(nullable: false),
+                    ApplicationUserId = table.Column<string>(nullable: true),
                     ArticleId = table.Column<int>(nullable: false),
                     Vote = table.Column<bool>(nullable: true)
                 },
@@ -312,7 +312,7 @@ namespace OutOfCite.Migrations
                         column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_UserArticleVotes_Articles_ArticleId",
                         column: x => x.ArticleId,
@@ -336,8 +336,8 @@ namespace OutOfCite.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LinkedIn", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "35f3b98f-01bb-45ab-93ee-ab6b34a1b966", 0, "841ebebe-a01c-4552-ac40-6250045c85ed", "admin@admin.com", true, "Admin", "Istrator", "www.linkedin.com/in/admin", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEAsMBUXsx//J+zC6sjG6LDmwpT7Lj84ZYR7QzqXiWlPRBk448mnL/ZgLJ7zp9axQ4w==", null, false, "32ca373c-44e3-4e75-9ef8-e098b15de683", false, "admin@admin.com" },
-                    { "41839694-39aa-4bfd-a750-4b342ed1402e", 0, "f5111ca6-adad-466f-9979-4075aa4e4a93", "wiec1369@gmail.com", true, "Adam", "Wieckert", "www.linkedin.com/in/awieckert", false, null, "WIEC1369@GMAIL.COM", "WIEC1369@GMAIL.COM", "AQAAAAEAACcQAAAAEOw+/Seg5Eo58DLnP79S9zVLmAF0tcYkruh/pmYcb0uOPIs0ZBsgONuP3pLr8xPUnA==", null, false, "b8b57b46-f4e6-4455-9289-c5fcd2486404", false, "wiec1369@gmail.com" }
+                    { "42142701-a034-43e5-a6b3-198e64f4b709", 0, "5daedf85-25b3-4854-868d-5c6c187aa1cf", "admin@admin.com", true, "Admin", "Istrator", "www.linkedin.com/in/admin", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEJEILM5Xox8Wr3lKfHr77QOUZdXvFulEN9I4ggC22ssfogeE2LvSJDhwnjwEjHIdGg==", null, false, "0d243934-6b9d-4403-bac4-1f9712029e60", false, "admin@admin.com" },
+                    { "16126b04-184e-4588-b42c-3017ca1c17a6", 0, "8e18c843-9517-4f5c-b006-747d68705bef", "wiec1369@gmail.com", true, "Adam", "Wieckert", "www.linkedin.com/in/awieckert", false, null, "WIEC1369@GMAIL.COM", "WIEC1369@GMAIL.COM", "AQAAAAEAACcQAAAAEK4RcCIzyBIZl46pKnobJJiJ4DtuzYfxFLM4nI5v8w8sMu/9p7sd0uiGqHkoB6r+yA==", null, false, "ed8d636d-b001-46cc-8a9e-685e12888c7f", false, "wiec1369@gmail.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -379,10 +379,10 @@ namespace OutOfCite.Migrations
                 columns: new[] { "Id", "AffiliationId", "ApplicationUserId" },
                 values: new object[,]
                 {
-                    { 1, 1, "35f3b98f-01bb-45ab-93ee-ab6b34a1b966" },
-                    { 2, 2, "35f3b98f-01bb-45ab-93ee-ab6b34a1b966" },
-                    { 3, 3, "35f3b98f-01bb-45ab-93ee-ab6b34a1b966" },
-                    { 4, 1, "41839694-39aa-4bfd-a750-4b342ed1402e" }
+                    { 1, 1, "42142701-a034-43e5-a6b3-198e64f4b709" },
+                    { 2, 2, "42142701-a034-43e5-a6b3-198e64f4b709" },
+                    { 3, 3, "42142701-a034-43e5-a6b3-198e64f4b709" },
+                    { 4, 1, "16126b04-184e-4588-b42c-3017ca1c17a6" }
                 });
 
             migrationBuilder.InsertData(
@@ -390,10 +390,10 @@ namespace OutOfCite.Migrations
                 columns: new[] { "Id", "ApplicationUserId", "ArticleId" },
                 values: new object[,]
                 {
-                    { 3, "35f3b98f-01bb-45ab-93ee-ab6b34a1b966", 2 },
-                    { 1, "41839694-39aa-4bfd-a750-4b342ed1402e", 1 },
-                    { 2, "35f3b98f-01bb-45ab-93ee-ab6b34a1b966", 7 },
-                    { 4, "35f3b98f-01bb-45ab-93ee-ab6b34a1b966", 10 }
+                    { 3, "42142701-a034-43e5-a6b3-198e64f4b709", 2 },
+                    { 1, "16126b04-184e-4588-b42c-3017ca1c17a6", 1 },
+                    { 2, "42142701-a034-43e5-a6b3-198e64f4b709", 7 },
+                    { 4, "42142701-a034-43e5-a6b3-198e64f4b709", 10 }
                 });
 
             migrationBuilder.InsertData(
@@ -401,11 +401,11 @@ namespace OutOfCite.Migrations
                 columns: new[] { "Id", "ApplicationUserId", "ArticleId", "Vote" },
                 values: new object[,]
                 {
-                    { 2, "35f3b98f-01bb-45ab-93ee-ab6b34a1b966", 2, true },
-                    { 4, "41839694-39aa-4bfd-a750-4b342ed1402e", 1, true },
-                    { 1, "35f3b98f-01bb-45ab-93ee-ab6b34a1b966", 7, true },
-                    { 5, "35f3b98f-01bb-45ab-93ee-ab6b34a1b966", 8, false },
-                    { 3, "35f3b98f-01bb-45ab-93ee-ab6b34a1b966", 10, true }
+                    { 2, "42142701-a034-43e5-a6b3-198e64f4b709", 2, true },
+                    { 4, "16126b04-184e-4588-b42c-3017ca1c17a6", 1, true },
+                    { 1, "42142701-a034-43e5-a6b3-198e64f4b709", 7, true },
+                    { 5, "42142701-a034-43e5-a6b3-198e64f4b709", 8, false },
+                    { 3, "42142701-a034-43e5-a6b3-198e64f4b709", 10, true }
                 });
 
             migrationBuilder.CreateIndex(
