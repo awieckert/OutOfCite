@@ -63,6 +63,29 @@ namespace OutOfCite.Models.ViewModels
                 }
             }
 
+            List<Article> randomizedArticles = new List<Article>();
+            Random r = new Random();
+            int rInt1 = r.Next(0, Articles.Count);
+            int rInt2 = r.Next(0, Articles.Count);
+
+            while (rInt2 == rInt1)
+            {
+                rInt2 = r.Next(0, Articles.Count);
+            }
+
+            int rInt3 = r.Next(0, Articles.Count);
+
+            while (rInt3 == rInt2 || rInt3 == rInt1)
+            {
+                rInt3 = r.Next(0, Articles.Count);
+            }
+
+            randomizedArticles.Add(Articles[rInt1]);
+            randomizedArticles.Add(Articles[rInt2]);
+            randomizedArticles.Add(Articles[rInt3]);
+
+            Articles = randomizedArticles;
+
 
             Affiliation = context.Affiliations.Where(x => x.Id == id).SingleOrDefault();
         }

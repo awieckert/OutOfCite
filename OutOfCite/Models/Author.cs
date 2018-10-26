@@ -20,6 +20,7 @@ namespace OutOfCite.Models
         public string LastName { get; set; }
 
         [Required]
+        [Range(25, 300, ErrorMessage = "H-Index must be within 25 - 300") ]
         [Display(Name = "Author H-Index")]
         public int HIndex { get; set; }
     }

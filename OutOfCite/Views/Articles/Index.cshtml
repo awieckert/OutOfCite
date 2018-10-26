@@ -6,7 +6,7 @@
     </div>
     <div class="panel panel-default panel-primary col-sm-10 col-sm-offset-1">
         <div class="panel-heading">
-            @Html.DisplayFor(model=> model.Affiliation.Name) Articles
+            @Html.DisplayFor(model => model.Affiliation.Name) Articles
         </div>
         <div class="panel-body">
             <table class="table">
@@ -35,87 +35,92 @@
                 <tbody>
                     @foreach (var item in Model.Articles)
                     {
-                    <tr>
-                        <td>
-                            <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Title)</a>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Journal)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.JournalImpact)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Citations)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.UpVotes)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DownVotes)
-                        </td>
+                        <tr>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Title)</a>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Journal)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.JournalImpact)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Citations)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UpVotes)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DownVotes)
+                            </td>
 
-                        @if (@Model.CanUserVote && @item.UserVote == null) {
-                        <td>
-                            @Html.ActionLink(
-                                "Up-Vote",                                                  // linkText
-                                "Vote",                                    // actionName
-                                "Articles",                                                   // controllerName
-                                new {                                                     // routeValues
-                                    articleId = item.Id,
-                                    Vote = true,
-                                    affiliationId = Model.Affiliation.Id
-                                },
-                                null                                                      // htmlAttributes
-                            )
-                        </td>
-                        <td>
-                            @Html.ActionLink(
-                                "Down-Vote",                                                  // linkText
-                                "Vote",                                    // actionName
-                                "Articles",                                                   // controllerName
-                                new {                                                     // routeValues
-                                    articleId = item.Id,
-                                    Vote = false,
-                                    affiliationId = Model.Affiliation.Id
-                                },
-                                null                                                      // htmlAttributes
-                            )
-                        </td>
-                        } else if (@Model.CanUserVote && @item.UserVote == false) {
-                        <td>
-                            @Html.ActionLink(
-                                "Change Vote Up-Vote",                                                  // linkText
-                                "Vote",                                    // actionName
-                                "Articles",                                                   // controllerName
-                                new {                                                     // routeValues
-                                    articleId = item.Id,
-                                    Vote = true,
-                                    affiliationId = Model.Affiliation.Id
-                                },
-                                null                                                      // htmlAttributes
-                            )
-                        </td>
-                        } else if (@Model.CanUserVote && @item.UserVote == true) {
-                        <td>
-                            @Html.ActionLink(
-                                "Change Vote Down-Vote",                                                  // linkText
-                                "Vote",                                    // actionName
-                                "Articles",                                                   // controllerName
-                                new {                                                     // routeValues
-                                    articleId = item.Id,
-                                    Vote = false,
-                                    affiliationId = Model.Affiliation.Id
-                                },
-                                null                                                      // htmlAttributes
-                            )
-                        </td>
-                        }
-                        <td>
-                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                            <a asp-action="Favorite" asp-route-id="@item.Id">Favorite</a>
-                        </td>
-                    </tr>
+                            @if (@Model.CanUserVote && @item.UserVote == null)
+                            {
+                                <td>
+                                    @Html.ActionLink(
+                                        "Up-Vote",                                                  // linkText
+                                        "Vote",                                    // actionName
+                                        "Articles",                                                   // controllerName
+                                        new {                                                     // routeValues
+                                            articleId = item.Id,
+                                            Vote = true,
+                                            affiliationId = Model.Affiliation.Id
+                                        },
+                                        null                                                      // htmlAttributes
+                                    )
+                                </td>
+                                <td>
+                                    @Html.ActionLink(
+                                        "Down-Vote",                                                  // linkText
+                                        "Vote",                                    // actionName
+                                        "Articles",                                                   // controllerName
+                                        new {                                                     // routeValues
+                                            articleId = item.Id,
+                                            Vote = false,
+                                            affiliationId = Model.Affiliation.Id
+                                        },
+                                        null                                                      // htmlAttributes
+                                    )
+                                </td>
+                            }
+                            else if (@Model.CanUserVote && @item.UserVote == false)
+                            {
+                                <td>
+                                    @Html.ActionLink(
+                                        "Change Vote Up-Vote",                                                  // linkText
+                                        "Vote",                                    // actionName
+                                        "Articles",                                                   // controllerName
+                                        new {                                                     // routeValues
+                                            articleId = item.Id,
+                                            Vote = true,
+                                            affiliationId = Model.Affiliation.Id
+                                        },
+                                        null                                                      // htmlAttributes
+                                    )
+                                </td>
+                            }
+                            else if (@Model.CanUserVote && @item.UserVote == true)
+                            {
+                                <td>
+                                    @Html.ActionLink(
+                                        "Change Vote Down-Vote",                                                  // linkText
+                                        "Vote",                                    // actionName
+                                        "Articles",                                                   // controllerName
+                                        new {                                                     // routeValues
+                                            articleId = item.Id,
+                                            Vote = false,
+                                            affiliationId = Model.Affiliation.Id
+                                        },
+                                        null                                                      // htmlAttributes
+                                    )
+                                </td>
+                            }
+                            <td>
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Favorite" asp-route-id="@item.Id">Favorite</a>
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>
