@@ -97,26 +97,43 @@ namespace OutOfCite.Controllers
         }
 
         // GET: Users/Delete/5
-        public ActionResult Delete(int id)
+        [HttpGet]
+        public async Task<IActionResult> Delete()
         {
-            return View();
+            ApplicationUser currentUser = await GetCurrentUserAsync();
+            return View(currentUser);
         }
 
         // POST: Users/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> PostDelete()
         {
-            try
-            {
-                // TODO: Add delete logic here
+            ApplicationUser currentUser = await GetCurrentUserAsync();
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
+            List<FavoriteArticle> checkFavoriteArticles = (from fa in _context.FavoriteArticles
+                                         where fa.ApplicationUserId == currentUser.Id
+                                         select fa).ToList();
+
+            if (checkFavoriteArticles.Count > 0)
             {
-                return View();
+                _context.FavoriteArticles.RemoveRange(checkFavoriteArticles);
+                await _context.SaveChangesAsync();
             }
+
+            List<UserAffiliation> checkUserAffiliations = (from ua in _context.UserAffiliations
+                                                           where ua.ApplicationUserId == currentUser.Id
+                                                           select ua).ToList();
+
+            if (checkUserAffiliations.Count > 0)
+            {
+                _context.UserAffiliations.RemoveRange(checkUserAffiliations);
+                await _context.SaveChangesAsync();
+            }
+
+
+            await _userManager.DeleteAsync(currentUser);
+            return RedirectToAction("Index", "Home");
         }
     }
 }
