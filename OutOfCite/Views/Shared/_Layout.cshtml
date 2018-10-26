@@ -42,6 +42,7 @@
                     @if (SignInManager.IsSignedIn(User))
                     {
                         <li><a asp-area="" asp-controller="Articles" asp-action="Create">Submit Article</a></li>
+                        <li><a asp-area="" asp-controller="Articles" asp-action="UserSubmitted">View Submitted Articles</a></li>
                         <li><a asp-area="" asp-controller="Articles" asp-action="FavoriteArticles">Favorited Articles</a></li>
                         <li><a asp-area="" asp-controller="Affiliations" asp-action="Create">Add Affiliations</a></li>
                     }

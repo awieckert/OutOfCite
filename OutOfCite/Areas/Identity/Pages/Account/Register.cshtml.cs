@@ -68,7 +68,7 @@ namespace OutOfCite.Areas.Identity.Pages.Account {
         //    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         //    {
         //        InputModel inputModel = (InputModel)validationContext.ObjectInstance;
-                
+
         //        var checkUserName = _userManager.Users.Where(x => x.UserName.ToLower() == inputModel.UserName.ToLower()).Count();
 
         //        return base.IsValid(value, validationContext);

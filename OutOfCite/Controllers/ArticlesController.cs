@@ -59,7 +59,6 @@ namespace OutOfCite.Controllers
             return View(article);
         }
 
-        [HttpPost]
         public async Task<IActionResult> Favorite (int id)
         {
             var currentUser = await GetCurrentUserAsync();
@@ -111,6 +110,8 @@ namespace OutOfCite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ArticleCreateViewModel newArticleInfo)
         {
+            string currentUserId = (await GetCurrentUserAsync()).Id;
+
             if (ModelState.IsValid)
             {
                 var checkAffiliation = (from af in _context.Affiliations
@@ -156,7 +157,18 @@ namespace OutOfCite.Controllers
                     newArticleInfo.Article.AuthorId = checkAuthor.Id;
                 }
 
+
+
                 _context.Articles.Add(newArticleInfo.Article);
+                await _context.SaveChangesAsync();
+
+                SubmittedArticle newUserArticle = new SubmittedArticle()
+                {
+                    ApplicationUserId = currentUserId,
+                    ArticleId = newArticleInfo.Article.Id
+                };
+
+                _context.SubmittedArticles.Add(newUserArticle);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("MainPage", "Home");
             }
@@ -246,6 +258,45 @@ namespace OutOfCite.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", new { id = affiliationId });
             }
+        }
+
+        public async Task<IActionResult> UserSubmitted()
+        {
+            string currentUserId = (await GetCurrentUserAsync()).Id;
+
+            var userSubmittedArticles = (from sa in _context.SubmittedArticles
+                                         join a in _context.Articles on sa.ArticleId equals a.Id
+                                         join af in _context.Affiliations on a.AffiliationId equals af.Id
+                                         join au in _context.Authors on a.AuthorId equals au.Id
+                                         where sa.ApplicationUserId == currentUserId
+                                         select new
+                                         {
+                                             article = a,
+                                             affiliation = af,
+                                             author = au
+                                         }).ToList();
+
+            //select new
+            //{
+            //    article = a,
+            //    authored = (from author in _context.Authors
+            //                where a.AuthorId == author.Id
+            //                select author).SingleOrDefault(),
+            //    affiliation = (from af in _context.Affiliations
+            //                   where a.AffiliationId == af.Id
+            //                   select af).SingleOrDefault()
+            //}).ToList();
+
+            UserSubmitted usersSubArticles = new UserSubmitted();
+
+            foreach (var item in userSubmittedArticles)
+            {
+                item.article.Author = item.author;
+                item.article.Affiliation = item.affiliation;
+                usersSubArticles.Articles.Add(item.article);
+            }
+
+            return View(usersSubArticles);
         }
 
         // GET: Articles/Delete/5

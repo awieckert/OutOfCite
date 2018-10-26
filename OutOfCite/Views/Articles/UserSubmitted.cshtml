@@ -1,0 +1,68 @@
+﻿@model OutOfCite.Models.ViewModels.UserSubmitted
+
+<h2>User Submitted Articles</h2>
+
+<div class="row">
+    <div class="col-sm-offset-3 col-sm-6 text-center">
+        <h2>Out Of Cite</h2>
+    </div>
+    <div class="panel panel-default panel-primary col-sm-10 col-sm-offset-1">
+        <div class="panel-heading">
+            User Submitted Articles
+        </div>
+        <div class="panel-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Title
+                        </th>
+                        <th>
+                            Journal
+                        </th>
+                        <th>
+                            Journal Impact
+                        </th>
+                        <th>
+                            Citations
+                        </th>
+                        <th>
+                            Author
+                        </th>
+                        <th>
+                            Affiliation
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Articles)
+                    {
+                        <tr>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Title)</a>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Journal)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.JournalImpact)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Citations)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Author)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Affiliation)
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
