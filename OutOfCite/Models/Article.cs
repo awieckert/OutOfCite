@@ -30,6 +30,7 @@ namespace OutOfCite.Models
         public string Journal { get; set; }
 
         [Required]
+        [Range(0, 5, ErrorMessage = "Impact Factor must be less than 5 and not negative")]
         [Display(Name ="Journal Impact Factor")]
         public double JournalImpact { get; set; }
 
