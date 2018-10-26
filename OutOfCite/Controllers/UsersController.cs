@@ -15,12 +15,15 @@ namespace OutOfCite.Controllers
 
         private readonly ApplicationDbContext _context;
 
+        private readonly SignInManager<ApplicationUser> _signInManager;
+
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public UsersController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public UsersController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _context = context;
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
@@ -133,6 +136,7 @@ namespace OutOfCite.Controllers
 
 
             await _userManager.DeleteAsync(currentUser);
+            await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
     }
